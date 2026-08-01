@@ -3,32 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me - Feng Yuan</title>
-    <link rel="stylesheet" href="style.css">
+    <title>About - Myanmar Cycling Hub</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 🔝 Header Styles */
+        header {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            margin-top: 5px;
+            padding: 0 5px;
+        }
+
+        .header-title h1 {
+            font-size: 1.6rem;
+            color: #00f2fe;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+
+        .header-title p {
+            color: #cfd8dc;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+        }
+
+        /* 🔗 Navigation Links */
+        .sub-nav {
+            display: flex;
+            gap: 15px;
+            margin-top: 6px;
+        }
+
+        .sub-nav a {
+            color: #4facfe;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .sub-nav a:hover, .sub-nav a.active {
+            color: #00f2fe;
+            text-decoration: underline;
+        }
+
+        /* 📱 About Content Styles */
+        main {
+            width: 100%;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .about-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #00f2fe;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+            text-align: center;
+        }
+
+        .about-description {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .feature-item i {
+            font-size: 1.8rem;
+            color: #00f2fe;
+            margin-bottom: 8px;
+        }
+
+        .feature-item h4 {
+            font-size: 1rem;
+            color: #4facfe;
+            margin-bottom: 5px;
+        }
+
+        .feature-item p {
+            font-size: 0.82rem;
+            color: #cfd8dc;
+        }
+
+        footer { 
+            text-align: center; 
+            color: #90a4ae; 
+            font-size: 0.8rem; 
+            margin-top: auto; 
+        }
+    </style>
 </head>
 <body>
 
+    <!-- Header Navigation -->
     <header>
-        <div class="container">
-            <h1 class="logo">Feng Yuan's Blog</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-            </nav>
+        <div class="header-title">
+            <h1>🚴‍♂️ Myanmar Cycling Hub</h1>
+            <p>စက်ဘီးဆိုင်များ နှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
+
+            <div class="sub-nav">
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <section style="padding: 40px 0; text-align: center;">
-            <h2>ကျွန်ုပ်အကြောင်း (About Me)</h2>
-            <p style="margin-top: 15px;">ဒီနေရာမှာ သင့်အကြောင်း အသေးစိတ် ရေးသားနိုင်ပါတယ်။</p>
-        </section>
+    <!-- Main About Box -->
+    <main>
+        <div class="about-card">
+            <h2 class="about-title">🚴‍♂️ ကျွန်ုပ်တို့အကြောင်း (About Us)</h2>
+            <p class="about-description">
+                <strong>Myanmar Cycling Hub</strong> သည် မြန်မာနိုင်ငံတစ်ဝှမ်းရှိ စက်ဘီးဝါသနာရှင်များ၊ စက်ဘီးစီးသမားများ (Cyclists) နှင့် စက်ဘီးပြုပြင်/အရောင်းဆိုင်များကို တစ်နေရာတည်းတွင် အလွယ်တကူ ချိတ်ဆက်ပေးနိုင်ရန် ဖန်တီးထားသော Community Platform ဖြစ်ပါသည်။
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fa-solid fa-store"></i>
+                    <h4>စက်ဘီးဆိုင်များ</h4>
+                    <p>အနီးအနားရှိ စက်ဘီးပြင်ဆိုင်နှင့် အရောင်းဆိုင် အချက်အလက်များ ရှာဖွေနိုင်ခြင်း</p>
+                </div>
+
+                <div class="feature-item">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <h4>Bicycle News</h4>
+                    <p>စက်ဘီးနည်းပညာနှင့် သတင်းအချက်အလက်များကို လေ့လာဖတ်ရှုနိုင်ခြင်း</p>
+                </div>
+
+                <div class="feature-item">
+                    <i class="fa-solid fa-comments"></i>
+                    <h4>Live Chat</h4>
+                    <p>ဝါသနာတူ စက်ဘီးစီးဖော်များနှင့် တိုက်ရိုက် စကားပြောဆိုဆွေးနွေးနိုင်ခြင်း</p>
+                </div>
+            </div>
+        </div>
     </main>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Feng Yuan. All rights reserved.</p>
+        <p>&copy; 2026 Myanmar Cycling Hub. All rights reserved.</p>
     </footer>
 
 </body>
