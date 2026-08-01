@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myanmar Cycling Hub - စက်ဘီးဝါသနာရှင်များအတွက်</title>
+    <title>Myanmar Cycling Hub</title>
     <style>
         * {
             margin: 0;
@@ -24,38 +24,81 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
-            margin-top: 20px;
+            margin-bottom: 25px;
+            margin-top: 10px;
         }
 
         header h1 {
             font-size: 2.2rem;
-            margin-bottom: 8px;
             color: #00f2fe;
             text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+            margin-bottom: 5px;
         }
 
         header p {
-            font-size: 1rem;
             color: #cfd8dc;
+            font-size: 0.95rem;
         }
 
+        /* 🔘 Navigation Tabs (Home Page ရွေးစရာ ခလုတ်များ) */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 5;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: #00f2fe;
+            color: #0f2027;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 📦 Main Content Sections */
         .container {
             max-width: 800px;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
             margin-bottom: 80px;
             z-index: 2;
         }
 
-        .section-title {
-            color: #00f2fe;
-            font-size: 1.5rem;
-            border-bottom: 2px solid rgba(0, 242, 254, 0.3);
-            padding-bottom: 8px;
-            margin-top: 10px;
+        .tab-content {
+            display: none; /* နဂိုတွင် ဖျောက်ထားမည် */
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: flex; /* Active ဖြစ်မှ ပေါ်မည် */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card {
@@ -65,17 +108,11 @@
             padding: 20px;
             border-radius: 16px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(0, 242, 254, 0.4);
         }
 
         .card h3 {
             color: #4facfe;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             margin-bottom: 8px;
         }
 
@@ -85,7 +122,7 @@
             color: #00f2fe;
             padding: 3px 10px;
             border-radius: 12px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-bottom: 10px;
         }
 
@@ -109,27 +146,62 @@
             padding: 8px 14px;
             border-radius: 8px;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
-            transition: background 0.3s ease;
         }
 
-        .call-btn {
-            background: #28a745;
-            color: #ffffff;
+        .call-btn { background: #28a745; color: #ffffff; }
+        .map-btn { background: #17a2b8; color: #ffffff; }
+
+        /* 💬 Local Storage Comment Section */
+        .comment-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .call-btn:hover {
-            background: #218838;
+        .comment-input, .name-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            outline: none;
         }
 
-        .map-btn {
-            background: #17a2b8;
-            color: #ffffff;
+        .send-btn {
+            background: #00f2fe;
+            color: #000;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .map-btn:hover {
-            background: #138496;
+        .send-btn:hover { background: #4facfe; }
+
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .comment-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #00f2fe;
+        }
+
+        .comment-user {
+            font-weight: bold;
+            color: #4facfe;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
         }
 
         /* 🎵 Music Toggle Button */
@@ -138,107 +210,155 @@
             bottom: 25px;
             right: 25px;
             z-index: 10000;
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: rgba(0, 242, 254, 0.2);
             backdrop-filter: blur(10px);
             border: 2px solid #00f2fe;
             color: #ffffff;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             outline: none;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.4);
         }
 
-        #musicToggleBtn:hover {
-            transform: scale(1.15);
-        }
-
-        footer {
-            text-align: center;
-            color: #90a4ae;
-            font-size: 0.85rem;
-            z-index: 2;
-        }
+        footer { text-align: center; color: #90a4ae; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🚴‍♂️ မြို့နယ်စက်ဘီးဆိုင်များ လမ်းညွှန်</h1>
-        <p>စက်ဘီးပြင်ဆိုင်၊ အရောင်းဆိုင်နှင့် အပိုပစ္စည်းဆိုင်များ လိပ်စာ</p>
+        <h1>🚴‍♂️ Myanmar Cycling Hub</h1>
+        <p>စက်ဘီးဆိုင်များ၊ သတင်းများနှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
     </header>
+
+    <!-- 🔘 ရွေးချယ်စရာ Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('shops')">🏪 စက်ဘီးပြင်/အရောင်းဆိုင်များ</button>
+        <button class="tab-btn" onclick="switchTab('news')">📰 Bicycle News</button>
+        <button class="tab-btn" onclick="switchTab('chat')">💬 All Chat / Comments</button>
+    </div>
 
     <div class="container">
 
-        <h2 class="section-title">🏪 စက်ဘီးဆိုင်များစာရင်း</h2>
+        <!-- TAB 1: စက်ဘီးဆိုင်များ -->
+        <div id="shops" class="tab-content active">
+            <div class="card">
+                <h3>၁။ ရွှေစက်ဘီး အပိုပစ္စည်းနှင့် ပြင်ဆိုင်</h3>
+                <span class="tag">ပြင်ဆိုင် / အပိုပစ္စည်း</span>
+                <p class="info-p">📍 <strong>လိပ်စာ:</strong> လမ်း ၃၀၊ ၇၃ လမ်း နှင့် ၇၄ လမ်းကြား၊ မန္တလေးမြို့။</p>
+                <p class="info-p">🛠️ <strong>ဝန်ဆောင်မှု:</strong> Hydraulic Brakes, Drivetrain Upgrade နှင့် အပိုပစ္စည်းအစုံရရှိနိုင်ပါသည်။</p>
+                <div class="btn-group">
+                    <a href="tel:09123456789" class="action-btn call-btn">📞 ဖုန်းခေါ်မည်</a>
+                    <a href="https://maps.google.com" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
+                </div>
+            </div>
 
-        <!-- ဆိုင် ၁ -->
-        <div class="card">
-            <h3>၁။ ရွှေစက်ဘီး အပိုပစ္စည်းနှင့် ပြင်ဆိုင်</h3>
-            <span class="tag">ပြင်ဆိုင် / အပိုပစ္စည်း</span>
-            <p class="info-p">📍 <strong>လိပ်စာ:</strong> လမ်း ၃၀၊ ၇၃ လမ်း နှင့် ၇၄ လမ်းကြား၊ မန္တလေးမြို့။</p>
-            <p class="info-p">🛠️ <strong>ဝန်ဆောင်မှု:</strong> Hydraulic Brakes ပြုပြင်ခြင်း၊ Drivetrain Upgrade နှင့် အပိုပစ္စည်းအစုံရရှိနိုင်ပါသည်။</p>
-            
-            <div class="btn-group">
-                <a href="tel:09123456789" class="action-btn call-btn">📞 ဖုန်းခေါ်မည်</a>
-                <a href="https://maps.google.com" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
+            <div class="card">
+                <h3>၂။ Mya Bike Shop & Service</h3>
+                <span class="tag">စက်ဘီးအရောင်းဆိုင် / ပြင်ဆိုင်</span>
+                <p class="info-p">📍 <strong>လိပ်စာ:</strong> ၇၈ လမ်း၊ သိပ္ပံလမ်းထောင့်၊ မန္တလေးမြို့။</p>
+                <p class="info-p">🛠️ <strong>ဝန်ဆောင်မှု:</strong> Mountain Bike, Road Bike သစ်/တစ်ပတ်ရစ် အရောင်းဆိုင်။</p>
+                <div class="btn-group">
+                    <a href="tel:09987654321" class="action-btn call-btn">📞 ဖုန်းခေါ်မည်</a>
+                    <a href="https://maps.google.com" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
+                </div>
             </div>
         </div>
 
-        <!-- ဆိုင် ၂ -->
-        <div class="card">
-            <h3>၂။ Mya Bike Shop & Service</h3>
-            <span class="tag">စက်ဘီးအရောင်းဆိုင် / ပြင်ဆိုင်</span>
-            <p class="info-p">📍 <strong>လိပ်စာ:</strong> ၇၈ လမ်း၊ သိပ္ပံလမ်းထောင့်၊ မန္တလေးမြို့။</p>
-            <p class="info-p">🛠️ <strong>ဝန်ဆောင်မှု:</strong> Mountain Bike, Road Bike သစ်/တစ်ပတ်ရစ် အရောင်းဆိုင်နှင့် ဘရိတ်၊ ဂီယာ အကုန်ပြင်ပေးပါသည်။</p>
-            
-            <div class="btn-group">
-                <a href="tel:09987654321" class="action-btn call-btn">📞 ဖုန်းခေါ်မည်</a>
-                <a href="https://maps.google.com" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
+        <!-- TAB 2: BICYCLE NEWS -->
+        <div id="news" class="tab-content">
+            <div class="card">
+                <h3>🚴 Shimano Deore M4100 10-Speed ဂီယာစနစ်အကြောင်း သိကောင်းစရာ</h3>
+                <span class="tag">Tech News</span>
+                <p class="info-p">Mountain Bike စီးသူတွေအတွက် ဈေးနှုန်းနဲ့ တန်ဖိုး မျှတပြီး Performance ကောင်းမွန်တဲ့ Shimano Deore M4100 10-speed Groupset အကြောင်း အသေးစိတ် သုံးသပ်ချက်...</p>
+            </div>
+
+            <div class="card">
+                <h3>🏆 မြို့နယ်အလိုက် စက်ဘီးစီးပွဲတော်များ ကျင်းပမည်</h3>
+                <span class="tag">Events</span>
+                <p class="info-p">လာမည့် လဆန်းတွင် စက်ဘီးဝါသနာရှင်များ စုပေါင်း၍ မန္တလေး-ပြင်ဦးလွင် တောင်တက် စက်ဘီးစီးပွဲတော် ကျင်းပသွားမည်ဖြစ်ပါသည်။</p>
             </div>
         </div>
 
-        <!-- ဆိုင် ၃ -->
-        <div class="card">
-            <h3>၃။ ဦးအောင် စက်ဘီးကျွန်းပြင်ဆိုင်</h3>
-            <span class="tag">စက်ဘီးပြင်ဆိုင်</span>
-            <p class="info-p">📍 <strong>လိပ်စာ:</strong> မြို့မဈေးအနီး၊ မန္တလေးမြို့။</p>
-            <p class="info-p">🛠️ <strong>ဝန်ဆောင်မှု:</strong> ကျွန်းပြင်ခြင်း၊ လေထိုး/ဖာခြင်း၊ ကြိုးစက် ဆီခတ်ခြင်းနှင့် သာမန်ပြင်ဆင်မှုများ။</p>
-            
-            <div class="btn-group">
-                <a href="tel:09450000000" class="action-btn call-btn">📞 ဖုန်းခေါ်မည်</a>
-                <a href="https://maps.google.com" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
+        <!-- TAB 3: ALL CHAT / COMMENTS -->
+        <div id="chat" class="tab-content">
+            <div class="card">
+                <h3>💬 စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း (All Chat)</h3>
+                <p class="info-p" style="margin-bottom: 15px;">စက်ဘီးနဲ့ ပတ်သက်တာတွေ မေးမြန်းနိုင်သလို၊ မှတ်ချက် (Comment) ရေးခဲ့လို့ရပါတယ်ခင်ဗျာ -</p>
+                
+                <div class="comment-box">
+                    <input type="text" id="userName" class="name-input" placeholder="သင့်နာမည် ရိုက်ထည့်ပါ...">
+                    <textarea id="userComment" class="comment-input" rows="3" placeholder="စာရေးရန်..."></textarea>
+                    <button class="send-btn" onclick="postComment()">Send Message 🚀</button>
+                </div>
+
+                <div class="comment-list" id="commentList">
+                    <!-- Comments တွေ ဒီမှာ ပေါ်လာပါမယ် -->
+                </div>
             </div>
         </div>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 Myanmar Cycling Hub. All rights reserved.</p>
+        <p>&copy; 2026 Myanmar Cycling Hub.</p>
     </footer>
 
-    <!-- 🎵 Background Music -->
-    <button id="musicToggleBtn" title="Play/Pause Music">🎵</button>
-    <audio id="bgMusic" loop>
-        <source src="song.mp3" type="audio/mpeg">
-    </audio>
+    <!-- 🎵 Music -->
+    <button id="musicToggleBtn">🎵</button>
+    <audio id="bgMusic" loop><source src="song.mp3" type="audio/mpeg"></audio>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // 3D Snow/Particle Background
+        // 🔄 TAB SWITCHING LOGIC (ခလုတ်နှိပ်ရင် စာမျက်နှာပြောင်းရန်)
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // 💬 LOCAL COMMENT SYSTEM
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
+            const list = document.getElementById('commentList');
+            list.innerHTML = '';
+            comments.forEach(c => {
+                list.innerHTML += `
+                    <div class="comment-item">
+                        <div class="comment-user">👤 ${c.name}</div>
+                        <div>${c.text}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function postComment() {
+            const name = document.getElementById('userName').value || 'Anonymous Cyclist';
+            const text = document.getElementById('userComment').value;
+            if (!text) return alert('ကျေးဇူးပြု၍ စာရိုက်ထည့်ပါခင်ဗျာ!');
+
+            const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
+            comments.unshift({ name, text });
+            localStorage.setItem('cycling_comments', JSON.stringify(comments));
+
+            document.getElementById('userComment').value = '';
+            loadComments();
+        }
+
+        loadComments();
+
+        // ❄️ THREE.JS BACKGROUND
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, 5);
-
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.domElement.style.position = 'fixed';
         renderer.domElement.style.top = '0';
         renderer.domElement.style.left = '0';
@@ -246,26 +366,16 @@
         renderer.domElement.style.zIndex = '1';
         document.body.appendChild(renderer.domElement);
 
-        const particleCount = 50;
+        const particleCount = 40;
         const particleGeo = new THREE.BufferGeometry();
         const particleCoords = new Float32Array(particleCount * 3);
-
         for (let i = 0; i < particleCount * 3; i += 3) {
             particleCoords[i] = (Math.random() - 0.5) * 15;
             particleCoords[i + 1] = (Math.random() - 0.5) * 15;
             particleCoords[i + 2] = (Math.random() - 0.5) * 10;
         }
-
         particleGeo.setAttribute('position', new THREE.BufferAttribute(particleCoords, 3));
-
-        const particleMat = new THREE.PointsMaterial({
-            size: 0.12,
-            color: 0x00f2fe,
-            transparent: true,
-            opacity: 0.6
-        });
-
-        const particles = new THREE.Points(particleGeo, particleMat);
+        const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ size: 0.12, color: 0x00f2fe, transparent: true, opacity: 0.6 }));
         scene.add(particles);
 
         function animate() {
@@ -280,43 +390,13 @@
         }
         animate();
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Music Logic
+        // 🎵 MUSIC LOGIC
         const music = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicToggleBtn');
         music.volume = 0.4;
-
-        function playAudio() {
-            music.play().then(() => {
-                musicBtn.textContent = '🔊';
-            }).catch(e => console.log(e));
-        }
-        playAudio();
-
-        const enableAudio = () => {
-            if (music.paused) playAudio();
-            window.removeEventListener('click', enableAudio);
-            window.removeEventListener('scroll', enableAudio);
-            window.removeEventListener('touchstart', enableAudio);
-        };
-        window.addEventListener('click', enableAudio);
-        window.addEventListener('scroll', enableAudio);
-        window.addEventListener('touchstart', enableAudio);
-
-        musicBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (music.paused) {
-                music.play();
-                musicBtn.textContent = '🔊';
-            } else {
-                music.pause();
-                musicBtn.textContent = '🎵';
-            }
+        musicBtn.addEventListener('click', () => {
+            if (music.paused) { music.play(); musicBtn.textContent = '🔊'; }
+            else { music.pause(); musicBtn.textContent = '🎵'; }
         });
     </script>
 </body>
