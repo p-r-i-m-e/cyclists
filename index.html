@@ -1,49 +1,163 @@
-// 🔗 Google Visualization API သုံး၍ Google Sheet မှ Data ဆွဲယူခြင်း
-const sheetID = "1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8";
-const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclists Website</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        h1 {
+            color: #00f2fe;
+            margin-bottom: 10px;
+        }
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: #00f2fe;
+            color: #0f172a;
+            border-color: #00f2fe;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .info-p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
 
-function fetchNewsFromSheet() {
-    fetch(sheetURL)
-        .then(res => res.text())
-        .then(data => {
-            // Google Sheet ကပြန်ပို့သော JSON Data ကို စစ်ထုတ်ခြင်း
-            const json = JSON.parse(data.substring(47, data.length - 2));
-            const rows = json.table.rows;
-            const container = document.getElementById('newsContainer');
-            container.innerHTML = '';
+<div class="container">
+    <header>
+        <h1>🚴‍♂️ Cyclists Portal</h1>
+        <p style="color: #94a3b8;">Welcome to our Cyclists Club</p>
+    </header>
 
-            if (!rows || rows.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ မရှိသေးပါ။</p>';
-                return;
-            }
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('home')">Home</button>
+        <button class="tab-btn" onclick="switchTab('news')">Bicycle News</button>
+    </div>
 
-            // သတင်းအသစ်များကို အပေါ်ဆုံးတွင် ပြရန် reverse() သုံးပါသည်
-            rows.slice().reverse().forEach(row => {
-                const title = row.c[0] ? row.c[0].v : '';
-                const date = row.c[1] ? row.c[1].v : '';
-                const content = row.c[2] ? row.c[2].v : '';
+    <!-- TAB 1: HOME -->
+    <div id="home" class="tab-content active">
+        <div class="card">
+            <h2 style="color: #00f2fe; margin-bottom: 10px;">ကြိုဆိုပါတယ်!</h2>
+            <p class="info-p">စက်ဘီးချစ်သူများအတွက် သတင်းများနှင့် ဗဟုသုတများကို စုစည်းဖော်ပြပေးထားသော နေရာဖြစ်ပါသည်။</p>
+        </div>
+    </div>
 
-                // Title သို့မဟုတ် Content ပါမှ သတင်းအဖြစ် ပြမည်
-                if (title || content) {
-                    container.innerHTML += `
-                        <div class="card" style="margin-bottom: 15px;">
-                            ${date ? `<span class="tag" style="float:right; font-size:0.75rem; color:#00f2fe;">${date}</span>` : ''}
-                            <h3 style="color:#00f2fe; margin-bottom:8px;">${title}</h3>
-                            <p class="info-p" style="white-space: pre-line;">${content}</p>
-                        </div>
-                    `;
+    <!-- TAB 2: NEWS (Google Sheets Connected) -->
+    <div id="news" class="tab-content">
+        <div id="newsContainer">
+            <p style="text-align:center; color:#aaa;">သတင်းများကို လုဒ်ဆွဲနေပါသည်...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tab ပြောင်းလဲကြည့်ရှုသည့် Function
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // 🔗 Google Sheet မှ Data ဆွဲယူပြသခြင်း (Google Visualization API)
+    const sheetID = "1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8";
+    const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+
+    function fetchNewsFromSheet() {
+        fetch(sheetURL)
+            .then(res => res.text())
+            .then(data => {
+                // Google Sheet ကပြန်ပို့သော JSON Data ကို စစ်ထုတ်ခြင်း
+                const json = JSON.parse(data.substring(47, data.length - 2));
+                const rows = json.table.rows;
+                const container = document.getElementById('newsContainer');
+                container.innerHTML = '';
+
+                if (!rows || rows.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ မရှိသေးပါ။</p>';
+                    return;
                 }
-            });
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById('newsContainer').innerHTML = `
-                <p style="text-align:center; color:#aaa;">
-                    သတင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet ၏ Share Settings တွင် <br>
-                    <b>"Anyone with the link"</b> (Link ရှိသူတိုင်း ကြည့်နိုင်သည်) သို့ ပြောင်းထားခြင်း ရှိမရှိ စစ်ပေးပါ။
-                </p>`;
-        });
-}
 
-// သတင်းများ စတင်ခေါ်ယူမည်
-fetchNewsFromSheet();
+                // သတင်းအသစ်များကို အပေါ်ဆုံးတွင် ပြရန် reverse() သုံးထားပါသည်
+                rows.slice().reverse().forEach(row => {
+                    const title = row.c && row.c[0] ? row.c[0].v : '';
+                    const date = row.c && row.c[1] ? row.c[1].v : '';
+                    const content = row.c && row.c[2] ? row.c[2].v : '';
+
+                    if (title || content) {
+                        container.innerHTML += `
+                            <div class="card">
+                                ${date ? `<span style="float:right; font-size:0.8rem; color:#00f2fe;">${date}</span>` : ''}
+                                <h3 style="color:#00f2fe; margin-bottom:10px;">${title}</h3>
+                                <p class="info-p" style="white-space: pre-line;">${content}</p>
+                            </div>
+                        `;
+                    }
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('newsContainer').innerHTML = `
+                    <p style="text-align:center; color:#aaa;">
+                        သတင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet ၏ Share Settings တွင် <br>
+                        <b>"Anyone with the link"</b> သို့ ပြောင်းထားခြင်း ရှိမရှိ စစ်ဆေးပေးပါ။
+                    </p>`;
+            });
+    }
+
+    // သတင်းများ အလိုအလျောက် ဆွဲယူခေါ်ယူမည်
+    fetchNewsFromSheet();
+</script>
+
+</body>
+</html>
