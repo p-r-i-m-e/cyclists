@@ -335,14 +335,12 @@
             </div>
         </div>
 
-        <!-- TAB 2: NEWS -->
-        <div id="news" class="tab-content">
-            <div class="card">
-                <h3>🚴 Shimano Deore M4100 10-Speed ဂီယာစနစ်အကြောင်း သိကောင်းစရာ</h3>
-                <span class="tag">Tech News</span>
-                <p class="info-p">Mountain Bike စီးသူတွေအတွက် ဈေးနှုန်းနဲ့ တန်ဖိုး မျှတပြီး Performance ကောင်းမွန်တဲ့ Shimano Deore M4100 10-speed Groupset အကြောင်း အသေးစိတ် သုံးသပ်ချက်...</p>
-            </div>
-        </div>
+       <!-- TAB 2: NEWS -->
+<div id="news" class="tab-content">
+    <div id="newsContainer">
+        <!-- Database မှ သတင်းများ အလိုအလျောက် ပေါ်လာမည် -->
+    </div>
+</div>
 
     </div>
 
@@ -548,6 +546,26 @@
                 alert("Error: " + err.message);
             });
         }
+        // 📡 FETCH NEWS FROM DATABASE
+db.ref('bicycle_news').on('value', snapshot => {
+    const container = document.getElementById('newsContainer');
+    container.innerHTML = '';
+    const data = snapshot.val();
+    
+    if (data) {
+        Object.values(data).reverse().forEach(news => {
+            container.innerHTML += `
+                <div class="card" style="margin-bottom: 15px;">
+                    <h3>${news.title}</h3>
+                    <span class="tag">${news.tag}</span>
+                    <p class="info-p">${news.content}</p>
+                </div>
+            `;
+        });
+    } else {
+        container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ မရှိသေးပါ။</p>';
+    }
+});
     </script>
 </body>
 </html>
