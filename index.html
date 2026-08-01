@@ -7,231 +7,56 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif; }
+        body { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color: #ffffff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        header { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; margin-top: 5px; padding: 0 5px; }
+        .header-title h1 { font-size: 1.6rem; color: #00f2fe; text-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
+        .header-title p { color: #cfd8dc; font-size: 0.8rem; margin-bottom: 6px; }
+        .sub-nav { display: flex; gap: 15px; margin-top: 6px; }
+        .sub-nav a { color: #4facfe; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: 0.2s; }
+        .sub-nav a:hover, .sub-nav a.active { color: #00f2fe; text-decoration: underline; }
+        
+        .nav-tabs { width: 100%; max-width: 800px; display: flex; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); padding: 6px; border-radius: 15px; margin-bottom: 20px; gap: 8px; }
+        .tab-btn { flex: 1; padding: 12px; text-align: center; background: none; border: none; color: #cfd8dc; font-weight: bold; font-size: 0.9rem; cursor: pointer; border-radius: 10px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: #0f2027; box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); }
+        
+        main { width: 100%; max-width: 800px; margin-bottom: 30px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .card { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 20px; margin-bottom: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); }
+        .card-title { color: #00f2fe; font-size: 1.2rem; margin-bottom: 8px; }
+        .info-p { color: #e0e0e0; font-size: 0.9rem; line-height: 1.6; }
+        .tag { display: inline-block; background: rgba(0, 242, 254, 0.15); border: 1px solid rgba(0, 242, 254, 0.3); color: #00f2fe; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; }
 
-        body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
-            min-height: 100vh;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* 🔝 Header Styles */
-        header {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            margin-top: 5px;
-            padding: 0 5px;
-        }
-
-        .header-title h1 {
-            font-size: 1.6rem;
-            color: #00f2fe;
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
-        }
-
-        .header-title p {
-            color: #cfd8dc;
-            font-size: 0.8rem;
-            margin-bottom: 6px;
-        }
-
-        /* 🔗 Navigation Links */
-        .sub-nav {
-            display: flex;
-            gap: 15px;
-            margin-top: 6px;
-        }
-
-        .sub-nav a {
-            color: #4facfe;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .sub-nav a:hover, .sub-nav a.active {
-            color: #00f2fe;
-            text-decoration: underline;
-        }
-
-        /* 📱 Navigation Tabs */
-        .nav-tabs {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            gap: 8px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            text-align: center;
-            background: none;
-            border: none;
-            color: #cfd8dc;
-            font-weight: bold;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            color: #0f2027;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-        }
-
-        /* 📱 Container & Content Cards */
-        main {
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 30px;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .card-title {
-            color: #00f2fe;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-
-        .info-p {
-            color: #e0e0e0;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .tag {
-            display: inline-block;
-            background: rgba(0, 242, 254, 0.15);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            color: #00f2fe;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-        }
-
-        /* 💬 Chat Box Styles */
-        .chat-box {
-            height: 350px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 5px;
-            margin-bottom: 15px;
-        }
-
-        .chat-message {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 14px;
-            border-radius: 12px;
-            max-width: 85%;
-        }
-
-        .chat-user {
-            font-size: 0.8rem;
-            color: #00f2fe;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .chat-text {
-            font-size: 0.88rem;
-            color: #ffffff;
-        }
-
-        .chat-input-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .input-field {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 10px 14px;
-            border-radius: 8px;
-            color: #fff;
-            outline: none;
-            font-size: 0.9rem;
-        }
-
-        .input-field:focus {
-            border-color: #00f2fe;
-        }
-
-        .btn-send {
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            border: none;
-            color: #0f2027;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        footer { 
-            text-align: center; 
-            color: #90a4ae; 
-            font-size: 0.8rem; 
-            margin-top: auto;
-            padding: 10px 0;
-        }
+        /* Chat & Auth UI */
+        .chat-box { height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px; margin-bottom: 15px; }
+        .chat-message { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 14px; border-radius: 12px; max-width: 80%; }
+        .chat-message.my-msg { align-self: flex-end; background: rgba(0, 242, 254, 0.15); border-color: rgba(0, 242, 254, 0.3); }
+        .chat-user { font-size: 0.78rem; color: #00f2fe; font-weight: bold; margin-bottom: 3px; }
+        .chat-text { font-size: 0.88rem; color: #ffffff; word-break: break-word; }
+        .chat-input-group { display: flex; gap: 8px; }
+        
+        .input-field { width: 100%; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px 14px; border-radius: 8px; color: #fff; outline: none; font-size: 0.9rem; margin-bottom: 10px; }
+        .input-field:focus { border-color: #00f2fe; }
+        .btn-action { background: linear-gradient(45deg, #00f2fe, #4facfe); border: none; color: #0f2027; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        
+        .auth-container { max-width: 400px; margin: 0 auto; text-align: center; }
+        .auth-toggle { color: #00f2fe; cursor: pointer; text-decoration: underline; font-size: 0.85rem; }
+        footer { text-align: center; color: #90a4ae; font-size: 0.8rem; margin-top: auto; padding: 10px 0; }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <header>
         <div class="header-title">
             <h1>🚴‍♂️ Myanmar Cycling Hub</h1>
             <p>စက်ဘီးဆိုင်များ နှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
-
             <div class="sub-nav">
                 <a href="index.html" class="active">Home</a>
                 <a href="about.html">About</a>
@@ -240,21 +65,14 @@
         </div>
     </header>
 
-    <!-- Main Navigation Tabs -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('shops', event)">
-            <i class="fa-solid fa-store"></i> Shops
-        </button>
-        <button class="tab-btn" onclick="switchTab('news', event)">
-            <i class="fa-solid fa-newspaper"></i> News
-        </button>
-        <button class="tab-btn" onclick="switchTab('chat', event)">
-            <i class="fa-solid fa-comments"></i> Live Chat
-        </button>
+        <button class="tab-btn active" onclick="switchTab('shops', event)"><i class="fa-solid fa-store"></i> Shops</button>
+        <button class="tab-btn" onclick="switchTab('news', event)"><i class="fa-solid fa-newspaper"></i> News</button>
+        <button class="tab-btn" onclick="switchTab('chat', event)"><i class="fa-solid fa-comments"></i> Live Chat</button>
     </div>
 
     <main>
-        <!-- 🛠️ TAB 1: BICYCLE SHOPS -->
+        <!-- 🛠️ TAB 1: SHOPS -->
         <div id="shops" class="tab-content active">
             <div class="card">
                 <h3 class="card-title"><i class="fa-solid fa-wrench"></i> Pro Bike Service Shop</h3>
@@ -262,7 +80,6 @@
                 <p class="info-p"><b>လိပ်စာ:</b> မန္တလေးမြို့။</p>
                 <span class="tag" style="margin-top:8px;">Open Daily</span>
             </div>
-
             <div class="card">
                 <h3 class="card-title"><i class="fa-solid fa-bicycle"></i> Cycling World Workshop</h3>
                 <p class="info-p"><b>ဝန်ဆောင်မှု:</b> စက်ဘီးပစ္စည်းစုံ ရောင်းဝယ်ရေးနှင့် အပိုပစ္စည်းလဲလှယ်ပေးခြင်း။</p>
@@ -271,50 +88,162 @@
             </div>
         </div>
 
-        <!-- 📰 TAB 2: NEWS (Google Sheet မှ Auto ဆွဲယူမည့်နေရာ) -->
+        <!-- 📰 TAB 2: NEWS (Google Sheet) -->
         <div id="news" class="tab-content">
             <div id="newsContainer">
                 <p style="text-align:center; color:#cfd8dc;">သတင်းများကို လုဒ်ဆွဲနေပါသည်...</p>
             </div>
         </div>
 
-        <!-- 💬 TAB 3: LIVE CHAT BOX -->
+        <!-- 💬 TAB 3: FIREBASE LIVE CHAT -->
         <div id="chat" class="tab-content">
-            <div class="card">
-                <h3 class="card-title" style="margin-bottom:12px;"><i class="fa-solid fa-comments"></i> Cyclists Chat Room</h3>
-                
-                <div class="chat-box" id="chatBox">
-                    <div class="chat-message">
-                        <div class="chat-user">Admin</div>
-                        <div class="chat-text">Myanmar Cycling Hub စကားဝိုင်းမှ ကြိုဆိုပါတယ်။ စက်ဘီးအကြောင်းများ လွတ်လပ်စွာ ဆွေးနွေးနိုင်ပါတယ်ဗျ။</div>
-                    </div>
+            
+            <!-- 🔒 Login / Sign Up Form (အကောင့်မဝင်ရသေးပါက ပေါ်မည်) -->
+            <div id="authSection" class="card auth-container">
+                <h3 class="card-title" id="authTitle"><i class="fa-solid fa-user-lock"></i> အကောင့်ဝင်ပါ</h3>
+                <p class="info-p" style="margin-bottom: 15px;">Live Chat တွင် ပါဝင်ဆွေးနွေးရန် အကောင့်ဝင်ရန် လိုအပ်ပါသည်။</p>
+
+                <input type="text" id="authName" placeholder="သင့်အမည် (Username)" class="input-field" style="display:none;">
+                <input type="email" id="authEmail" placeholder="အီးမေးလ် (Email)" class="input-field">
+                <input type="password" id="authPass" placeholder="စကားဝှက် (Password - အနည်းဆုံး ၆ လုံး)" class="input-field">
+
+                <button class="btn-action" style="width: 100%; margin-bottom: 12px;" onclick="handleAuth()" id="authBtn">အကောင့်ဝင်မည်</button>
+                <p class="info-p"><span id="toggleText">အကောင့်မရှိသေးပါက</span> <span class="auth-toggle" onclick="toggleAuthMode()">အကောင့်သစ်ဖွင့်ပါ</span></p>
+            </div>
+
+            <!-- 💬 Realtime Chat Box (အကောင့်ဝင်ပြီးပါက ပေါ်မည်) -->
+            <div id="chatSection" class="card" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h3 class="card-title" style="margin: 0;"><i class="fa-solid fa-comments"></i> Cyclists Chat Room</h3>
+                    <button onclick="logout()" style="background: none; border: none; color: #ff5252; cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-right-from-bracket"></i> ထွက်မည်</button>
                 </div>
+                
+                <div class="chat-box" id="chatBox"></div>
 
                 <div class="chat-input-group">
-                    <input type="text" id="userName" placeholder="သင့်အမည်..." class="input-field" style="max-width: 30%;">
-                    <input type="text" id="chatMsg" placeholder="စာရိုက်ပါ..." class="input-field">
-                    <button class="btn-send" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                    <input type="text" id="chatMsg" placeholder="စာရိုက်ပါ..." class="input-field" style="margin:0;" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button class="btn-action" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 Myanmar Cycling Hub. All rights reserved.</p>
     </footer>
 
 <script>
-    // 🔄 Tab များ ကူးပြောင်းသည့် Function
+    // ⚙️ Firebase Config (သင့် Firebase Project Keys များနှင့် အစားထိုးပါ)= {
+    const firebaseConfig = {
+  apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
+  authDomain: "cycling-4545f.firebaseapp.com",
+  databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com",
+  projectId: "cycling-4545f",
+  storageBucket: "cycling-4545f.firebasestorage.app",
+  messagingSenderId: "1053672969724",
+  appId: "1:1053672969724:web:6eb60a9f30fde781398e79",
+  measurementId: "G-0M5GZHKV3J"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    let isSignUp = false;
+    let currentUser = null;
+
+    // 🔄 Tab Switch
     function switchTab(tabId, event) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        
         document.getElementById(tabId).classList.add('active');
         event.currentTarget.classList.add('active');
     }
 
-    // 🔗 Google Sheet မှ သတင်းများ ဆွဲယူမည့် Code (Google Visualization API)
+    // 🔑 Auth Mode Toggle
+    function toggleAuthMode() {
+        isSignUp = !isSignUp;
+        document.getElementById('authTitle').innerHTML = isSignUp ? '<i class="fa-solid fa-user-plus"></i> အကောင့်သစ်ဖွင့်ပါ' : '<i class="fa-solid fa-user-lock"></i> အကောင့်ဝင်ပါ';
+        document.getElementById('authName').style.display = isSignUp ? 'block' : 'none';
+        document.getElementById('authBtn').innerText = isSignUp ? 'အကောင့်သစ်ပြုလုပ်မည်' : 'အကောင့်ဝင်မည်';
+        document.getElementById('toggleText').innerText = isSignUp ? 'အကောင့်ရှိပြီးသားဖြစ်ပါက' : 'အကောင့်မရှိသေးပါက';
+    }
+
+    // 🚀 Login & Sign Up Handling
+    function handleAuth() {
+        const email = document.getElementById('authEmail').value;
+        const pass = document.getElementById('authPass').value;
+        const name = document.getElementById('authName').value;
+
+        if (!email || !pass) return alert("အီးမေးလ် နှင့် စကားဝှက် ဖြည့်ပါ");
+
+        if (isSignUp) {
+            if (!name) return alert("သင့်အမည် ဖြည့်ပါ");
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((res) => res.user.updateProfile({ displayName: name }))
+                .catch(err => alert("Error: " + err.message));
+        } else {
+            auth.signInWithEmailAndPassword(email, pass)
+                .catch(err => alert("Error: " + err.message));
+        }
+    }
+
+    // 🚪 Logout
+    function logout() { auth.signOut(); }
+
+    // 👤 Auth State Observer (အကောင့်ဝင်/ထွက် စောင့်ကြည့်ခြင်း)
+    auth.onAuthStateChanged(user => {
+        currentUser = user;
+        if (user) {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('chatSection').style.display = 'block';
+            loadChatMessages();
+        } else {
+            document.getElementById('authSection').style.display = 'block';
+            document.getElementById('chatSection').style.display = 'none';
+        }
+    });
+
+    // 💬 Send Chat Message to Firebase
+    function sendChatMessage() {
+        const msgInput = document.getElementById('chatMsg');
+        const msg = msgInput.value.trim();
+        if (!msg || !currentUser) return;
+
+        db.ref('global_chat').push({
+            sender: currentUser.displayName || currentUser.email.split('@')[0],
+            uid: currentUser.uid,
+            text: msg,
+            timestamp: Date.now()
+        });
+
+        msgInput.value = '';
+    }
+
+    // 📡 Load Realtime Chat Messages
+    function loadChatMessages() {
+        db.ref('global_chat').limitToLast(50).on('value', snapshot => {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML = '';
+            const data = snapshot.val();
+            
+            if (data) {
+                Object.values(data).forEach(m => {
+                    const isMe = currentUser && m.uid === currentUser.uid;
+                    chatBox.innerHTML += `
+                        <div class="chat-message ${isMe ? 'my-msg' : ''}">
+                            <div class="chat-user">${m.sender}</div>
+                            <div class="chat-text">${m.text}</div>
+                        </div>
+                    `;
+                });
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+    }
+
+    // 📰 Google Sheet News Fetching
     const sheetID = "1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8";
     const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
@@ -332,7 +261,6 @@
                     return;
                 }
 
-                // သတင်းအသစ်များကို အပေါ်ဆုံးတွင် ပြရန် reverse() သုံးထားသည်
                 rows.slice().reverse().forEach(row => {
                     const title = row.c && row.c[0] ? row.c[0].v : '';
                     const date = row.c && row.c[1] ? row.c[1].v : '';
@@ -351,34 +279,10 @@
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById('newsContainer').innerHTML = `
-                    <p style="text-align:center; color:#cfd8dc;">
-                        သတင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet ၏ Share Settings တွင် <br>
-                        <b>"Anyone with the link"</b> ပြောင်းထားခြင်း ရှိမရှိ စစ်ဆေးပေးပါ။
-                    </p>`;
+                document.getElementById('newsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ ဆွဲယူ၍ မရသေးပါ။</p>';
             });
     }
 
-    // 💬 Demo Chat မက်ဆေ့ခ်ျ ပို့သည့် Function
-    function sendChatMessage() {
-        const name = document.getElementById('userName').value.trim() || 'Anonymous';
-        const msg = document.getElementById('chatMsg').value.trim();
-        const chatBox = document.getElementById('chatBox');
-
-        if (!msg) return;
-
-        chatBox.innerHTML += `
-            <div class="chat-message" style="align-self: flex-end; background: rgba(0, 242, 254, 0.15); border-color: rgba(0, 242, 254, 0.3);">
-                <div class="chat-user" style="text-align:right;">${name}</div>
-                <div class="chat-text">${msg}</div>
-            </div>
-        `;
-
-        document.getElementById('chatMsg').value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    // စတင်ချိန်တွင် Google Sheet မှ သတင်းများ ခေါ်ယူမည်
     fetchNewsFromSheet();
 </script>
 
