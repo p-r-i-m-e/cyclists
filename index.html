@@ -40,7 +40,6 @@
             font-size: 0.95rem;
         }
 
-        /* 🔘 Navigation Tabs */
         .nav-tabs {
             display: flex;
             gap: 10px;
@@ -105,172 +104,26 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        .card h3 {
-            color: #4facfe;
-            font-size: 1.25rem;
-            margin-bottom: 8px;
-        }
-
-        .tag {
-            display: inline-block;
-            background: rgba(0, 242, 254, 0.2);
-            color: #00f2fe;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-
-        .info-p {
-            font-size: 0.95rem;
-            color: #e0e0e0;
-            line-height: 1.6;
-            margin-bottom: 6px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 14px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
+        .card h3 { color: #4facfe; font-size: 1.25rem; margin-bottom: 8px; }
+        .tag { display: inline-block; background: rgba(0, 242, 254, 0.2); color: #00f2fe; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; margin-bottom: 10px; }
+        .info-p { font-size: 0.95rem; color: #e0e0e0; line-height: 1.6; margin-bottom: 6px; }
+        .btn-group { display: flex; gap: 10px; margin-top: 12px; }
+        
+        .action-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; font-weight: bold; }
         .call-btn { background: #28a745; color: #ffffff; }
         .map-btn { background: #17a2b8; color: #ffffff; }
 
-        /* 💬 COMMENT & REPLY SYSTEM STYLES */
-        .comment-box {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .comment-input, .name-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            outline: none;
-        }
-
-        .send-btn {
-            background: #00f2fe;
-            color: #000;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .send-btn:hover { background: #4facfe; }
-
-        .comment-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .comment-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 14px;
-            border-radius: 12px;
-            border-left: 3px solid #00f2fe;
-        }
-
-        .comment-user {
-            font-weight: bold;
-            color: #00f2fe;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-        }
-
-        .comment-text {
-            color: #e0e0e0;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-        }
-
-        .reply-btn {
-            background: transparent;
-            border: none;
-            color: #4facfe;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: bold;
-            padding: 0;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .reply-btn:hover { text-decoration: underline; }
-
-        /* ↩️ Reply Box & Replies List */
-        .reply-box {
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 10px;
-            padding-left: 15px;
-            border-left: 2px solid rgba(0, 242, 254, 0.3);
-        }
-
-        .reply-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 10px;
-            padding-left: 15px;
-        }
-
-        .reply-item {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 2px solid #4facfe;
-        }
-
-        .reply-user {
-            font-weight: bold;
-            color: #4facfe;
-            font-size: 0.85rem;
-        }
-
-        /* 🎵 Music Toggle Button */
-        #musicToggleBtn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 10000;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(0, 242, 254, 0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid #00f2fe;
-            color: #ffffff;
-            font-size: 20px;
-            cursor: pointer;
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* 🔐 AUTH & REALTIME CHAT STYLES */
+        .auth-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .input-field { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(0,0,0,0.3); color: #fff; outline: none; }
+        .btn-group-auth { display: flex; gap: 10px; }
+        .btn { padding: 10px 15px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: #00f2fe; color: #000; flex: 1; }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: #fff; flex: 1; }
+        .user-profile-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: rgba(0,242,254,0.1); padding: 10px 15px; border-radius: 8px; border: 1px solid #00f2fe; }
+        .comment-item { background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 10px; border-left: 3px solid #00f2fe; margin-bottom: 10px; }
+        .comment-user { font-weight: bold; color: #00f2fe; font-size: 0.9rem; }
+        .comment-text { color: #e0e0e0; margin-top: 4px; font-size: 0.95rem; }
 
         footer { text-align: center; color: #90a4ae; font-size: 0.85rem; }
     </style>
@@ -282,16 +135,16 @@
         <p>စက်ဘီးဆိုင်များ၊ သတင်းများနှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
     </header>
 
-    <!-- 🔘 Navigation Tabs -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('shops')">🏪 စက်ဘီးပြင်/အရောင်းဆိုင်များ</button>
+        
         <button class="tab-btn" onclick="switchTab('news')">📰 Bicycle News</button>
+        <button class="tab-btn active" onclick="switchTab('shops')">🏪 စက်ဘီးပြင်/အရောင်းဆိုင်များ</button>
         <button class="tab-btn" onclick="switchTab('chat')">💬 All Chat / Comments</button>
     </div>
 
     <div class="container">
 
-        <!-- TAB 1: စက်ဘီးဆိုင်များ -->
+        <!-- TAB 1: SHOPS -->
         <div id="shops" class="tab-content active">
             <div class="card">
                 <h3>၁။ ရွှေစက်ဘီး အပိုပစ္စည်းနှင့် ပြင်ဆိုင်</h3>
@@ -300,7 +153,7 @@
                 <p class="info-p">🛠️ <strong>ဝန်ဆောင်မှု:</strong> Hydraulic Brakes, Drivetrain Upgrade နှင့် အပိုပစ္စည်းအစုံရရှိနိုင်ပါသည်။</p>
                 <div class="btn-group">
                     <a href="tel:09123456789" class="action-btn call-btn">📞 ဖုန်းခေါ်မည်</a>
-                    <a href="https://maps.google.com" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=30th+street+Mandalay" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
                 </div>
             </div>
 
@@ -311,12 +164,12 @@
                 <p class="info-p">🛠️ <strong>ဝန်ဆောင်မှု:</strong> Mountain Bike, Road Bike သစ်/တစ်ပတ်ရစ် အရောင်းဆိုင်။</p>
                 <div class="btn-group">
                     <a href="tel:09987654321" class="action-btn call-btn">📞 ဖုန်းခေါ်မည်</a>
-                    <a href="https://maps.google.com" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=78th+street+Mandalay" target="_blank" class="action-btn map-btn">🗺️ Google Map</a>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 2: BICYCLE NEWS -->
+        <!-- TAB 2: NEWS -->
         <div id="news" class="tab-content">
             <div class="card">
                 <h3>🚴 Shimano Deore M4100 10-Speed ဂီယာစနစ်အကြောင်း သိကောင်းစရာ</h3>
@@ -325,22 +178,46 @@
             </div>
         </div>
 
-        <!-- TAB 3: ALL CHAT WITH REPLIES -->
+        <!-- TAB 3: REALTIME CHAT & AUTHENTICATION -->
         <div id="chat" class="tab-content">
-            <div class="card">
-                <h3>💬 စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း (All Chat)</h3>
-                <p class="info-p" style="margin-bottom: 15px;">စက်ဘီးနဲ့ ပတ်သက်တာတွေ မေးမြန်းနိုင်သလို၊ မှတ်ချက် (Comment/Reply) ရေးခဲ့လို့ရပါတယ်ခင်ဗျာ -</p>
+            
+            <!-- 🔐 1. ACCOUNT LOGIN / REGISTER CARD -->
+            <div class="card" id="authCard">
+                <h3 style="color:#00f2fe; margin-bottom:10px;">👤 အကောင့်ဝင်ရန် / အကောင့်သစ်ဖွင့်ရန်</h3>
+                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 12px;">Comment ရေးသားရန်နှင့် လူတိုင်း၏ စကားဝိုင်းတွင် ပါဝင်ရန် အကောင့်ဝင်ပေးပါ။</p>
                 
-                <div class="comment-box">
-                    <input type="text" id="userName" class="name-input" placeholder="သင့်နာမည် ရိုက်ထည့်ပါ...">
-                    <textarea id="userComment" class="comment-input" rows="3" placeholder="စာရေးရန်..."></textarea>
-                    <button class="send-btn" onclick="postComment()">Send Message 🚀</button>
-                </div>
-
-                <div class="comment-list" id="commentList">
-                    <!-- Comments & Replies များ ဒီမှာ ပေါ်လာပါမည် -->
+                <div class="auth-container">
+                    <input type="text" id="regName" class="input-field" placeholder="သင့် နာမည် (အကောင့်သစ်ဖွင့်သူများသာ ရိုက်ပါ)">
+                    <input type="email" id="authEmail" class="input-field" placeholder="Email အီးမေးလ်">
+                    <input type="password" id="authPassword" class="input-field" placeholder="Password စကားဝှက်">
+                    
+                    <div class="btn-group-auth">
+                        <button class="btn btn-primary" onclick="loginUser()">Login ဝင်မည်</button>
+                        <button class="btn btn-secondary" onclick="registerUser()">Sign Up (အကောင့်ဖွင့်မည်)</button>
+                    </div>
                 </div>
             </div>
+
+            <!-- 💬 2. REALTIME CHAT CARD (LOGGED IN ONLY) -->
+            <div class="card" id="chatCard" style="display: none;">
+                <div class="user-profile-bar">
+                    <span>👤 အကောင့် - <strong id="loggedInUser" style="color: #00f2fe;">-</strong></span>
+                    <button class="btn" style="background: #ff4757; color: #fff; padding: 5px 10px;" onclick="logoutUser()">Logout ထွက်မည်</button>
+                </div>
+
+                <h3>💬 All Chat / Comments (လူတိုင်း တိုက်ရိုက်မြင်ရသည်)</h3>
+                <p class="info-p" style="margin-bottom: 15px;">စက်ဘီး မေးခွန်းများ၊ အကြောင်းအရာများ မေးမြန်းနိုင်ပါသည် -</p>
+                
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <input type="text" id="chatInput" class="input-field" placeholder="Comment စာရေးပါ...">
+                    <button class="btn btn-primary" onclick="sendRealtimeComment()">Send 🚀</button>
+                </div>
+
+                <div id="commentsList">
+                    <!-- Realtime Comments များ ဒီမှာ ပေါ်ပါမည် -->
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -349,11 +226,11 @@
         <p>&copy; 2026 Myanmar Cycling Hub.</p>
     </footer>
 
-    <!-- 🎵 Music -->
-    <button id="musicToggleBtn">🎵</button>
-    <audio id="bgMusic" loop><source src="song.mp3" type="audio/mpeg"></audio>
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -362,120 +239,101 @@
             event.currentTarget.classList.add('active');
         }
 
-        // 💬 LOCAL COMMENT & REPLY SYSTEM
-        function loadComments() {
-            const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
-            const list = document.getElementById('commentList');
-            list.innerHTML = '';
+        // 🔑 FIREBASE CONFIGURATION (သင့် Project ရဲ့ Keys များ ထည့်သွင်းပြီး)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
+            authDomain: "cycling-4545f.firebaseapp.com",
+            databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com",
+            projectId: "cycling-4545f",
+            storageBucket: "cycling-4545f.firebasestorage.app",
+            messagingSenderId: "1053672969724",
+            appId: "1:1053672969724:web:6eb60a9f30fde781398e79"
+        };
+        firebase.initializeApp(firebaseConfig);
 
-            comments.forEach((c, index) => {
-                let repliesHtml = '';
-                if (c.replies && c.replies.length > 0) {
-                    repliesHtml = '<div class="reply-list">' + c.replies.map(r => `
-                        <div class="reply-item">
-                            <div class="reply-user">↩️ ${r.name}</div>
-                            <div class="comment-text">${r.text}</div>
-                        </div>
-                    `).join('') + '</div>';
+        const auth = firebase.auth();
+        const db = firebase.database();
+        let currentUserDisplayName = "";
+
+        // 🔄 AUTH CHECKER
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                currentUserDisplayName = user.displayName || user.email;
+                document.getElementById('loggedInUser').innerText = currentUserDisplayName;
+                document.getElementById('authCard').style.display = 'none';
+                document.getElementById('chatCard').style.display = 'block';
+                loadRealtimeComments();
+            } else {
+                document.getElementById('authCard').style.display = 'block';
+                document.getElementById('chatCard').style.display = 'none';
+            }
+        });
+
+        // 📝 SIGN UP
+        function registerUser() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('authEmail').value;
+            const pass = document.getElementById('authPassword').value;
+
+            if (!name || !email || !pass) return alert('ကျေးဇူးပြု၍ နာမည်၊ အီးမေးလ်နှင့် စကားဝှက် အကုန်ဖြည့်ပါ!');
+
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then(userCredential => {
+                    return userCredential.user.updateProfile({ displayName: name });
+                })
+                .then(() => alert('အကောင့်ဖွင့်ခြင်း အောင်မြင်ပါသည်!'))
+                .catch(err => alert(err.message));
+        }
+
+        // 🔑 LOGIN
+        function loginUser() {
+            const email = document.getElementById('authEmail').value;
+            const pass = document.getElementById('authPassword').value;
+
+            if (!email || !pass) return alert('Email နှင့် Password ရိုက်ထည့်ပါ!');
+
+            auth.signInWithEmailAndPassword(email, pass)
+                .catch(err => alert(err.message));
+        }
+
+        // 🚪 LOGOUT
+        function logoutUser() {
+            auth.signOut();
+        }
+
+        // 🚀 SEND REALTIME COMMENT
+        function sendRealtimeComment() {
+            const text = document.getElementById('chatInput').value;
+            if (!text) return;
+
+            db.ref('global_comments').push({
+                userName: currentUserDisplayName,
+                text: text,
+                timestamp: Date.now()
+            });
+
+            document.getElementById('chatInput').value = '';
+        }
+
+        // 📡 LOAD REALTIME COMMENTS
+        function loadRealtimeComments() {
+            db.ref('global_comments').on('value', snapshot => {
+                const list = document.getElementById('commentsList');
+                list.innerHTML = '';
+                const data = snapshot.val();
+                
+                if (data) {
+                    Object.values(data).reverse().forEach(c => {
+                        list.innerHTML += `
+                            <div class="comment-item">
+                                <div class="comment-user">👤 ${c.userName}</div>
+                                <div class="comment-text">${c.text}</div>
+                            </div>
+                        `;
+                    });
                 }
-
-                list.innerHTML += `
-                    <div class="comment-item">
-                        <div class="comment-user">👤 ${c.name}</div>
-                        <div class="comment-text">${c.text}</div>
-                        <button class="reply-btn" onclick="toggleReplyBox(${index})">💬 Reply ပြန်မည်</button>
-                        
-                        <div class="reply-box" id="replyBox-${index}">
-                            <input type="text" id="replyName-${index}" class="name-input" placeholder="သင့်နာမည်...">
-                            <input type="text" id="replyText-${index}" class="comment-input" placeholder="Reply စာရေးပါ...">
-                            <button class="send-btn" style="padding: 6px; font-size: 0.85rem;" onclick="postReply(${index})">Send Reply 🚀</button>
-                        </div>
-
-                        ${repliesHtml}
-                    </div>
-                `;
             });
         }
-
-        function postComment() {
-            const name = document.getElementById('userName').value || 'Anonymous Cyclist';
-            const text = document.getElementById('userComment').value;
-            if (!text) return alert('ကျေးဇူးပြု၍ စာရိုက်ထည့်ပါခင်ဗျာ!');
-
-            const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
-            comments.unshift({ name, text, replies: [] });
-            localStorage.setItem('cycling_comments', JSON.stringify(comments));
-
-            document.getElementById('userComment').value = '';
-            loadComments();
-        }
-
-        function toggleReplyBox(index) {
-            const box = document.getElementById(`replyBox-${index}`);
-            box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function postReply(index) {
-            const name = document.getElementById(`replyName-${index}`).value || 'Anonymous Cyclist';
-            const text = document.getElementById(`replyText-${index}`).value;
-            if (!text) return alert('ကျေးဇူးပြု၍ Reply စာရိုက်ထည့်ပါခင်ဗျာ!');
-
-            const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
-            if (!comments[index].replies) comments[index].replies = [];
-            
-            comments[index].replies.push({ name, text });
-            localStorage.setItem('cycling_comments', JSON.stringify(comments));
-
-            loadComments();
-        }
-
-        loadComments();
-
-        // ❄️ THREE.JS BACKGROUND
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0, 5);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.domElement.style.position = 'fixed';
-        renderer.domElement.style.top = '0';
-        renderer.domElement.style.left = '0';
-        renderer.domElement.style.pointerEvents = 'none';
-        renderer.domElement.style.zIndex = '1';
-        document.body.appendChild(renderer.domElement);
-
-        const particleCount = 40;
-        const particleGeo = new THREE.BufferGeometry();
-        const particleCoords = new Float32Array(particleCount * 3);
-        for (let i = 0; i < particleCount * 3; i += 3) {
-            particleCoords[i] = (Math.random() - 0.5) * 15;
-            particleCoords[i + 1] = (Math.random() - 0.5) * 15;
-            particleCoords[i + 2] = (Math.random() - 0.5) * 10;
-        }
-        particleGeo.setAttribute('position', new THREE.BufferAttribute(particleCoords, 3));
-        const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ size: 0.12, color: 0x00f2fe, transparent: true, opacity: 0.6 }));
-        scene.add(particles);
-
-        function animate() {
-            requestAnimationFrame(animate);
-            const positions = particles.geometry.attributes.position.array;
-            for (let i = 1; i < particleCount * 3; i += 3) {
-                positions[i] -= 0.003;
-                if (positions[i] < -7) positions[i] = 7;
-            }
-            particles.geometry.attributes.position.needsUpdate = true;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // 🎵 MUSIC LOGIC
-        const music = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicToggleBtn');
-        music.volume = 0.4;
-        musicBtn.addEventListener('click', () => {
-            if (music.paused) { music.play(); musicBtn.textContent = '🔊'; }
-            else { music.pause(); musicBtn.textContent = '🎵'; }
-        });
     </script>
 </body>
 </html>
