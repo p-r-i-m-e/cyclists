@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Admin - Myanmar Cycling Hub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: #0f2027; color: #fff; padding: 20px; display: flex; justify-content: center; }
+        .admin-box { background: rgba(255,255,255,0.08); padding: 20px; border-radius: 12px; border: 1px solid #00f2fe; width: 100%; max-width: 500px; }
+        h2 { color: #00f2fe; margin-bottom: 15px; text-align: center; }
+        input, textarea { width: 100%; padding: 10px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #00f2fe; background: #1a2a3a; color: #fff; outline: none; }
+        button { width: 100%; padding: 12px; background: #00f2fe; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #000; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-box">
+        <h2>📰 News Admin Panel</h2>
+        <input type="text" id="newsTitle" placeholder="သတင်းခေါင်းစဉ် ရိုက်ပါ...">
+        <input type="text" id="newsTag" placeholder="Tag အမည် (ဥပမာ- Tech News, Event)">
+        <textarea id="newsContent" rows="5" placeholder="သတင်းအသေးစိတ် ရေးပါ..."></textarea>
+        <button onclick="publishNews()">🚀 သတင်းတင်မည်</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
+            authDomain: "cycling-4545f.firebaseapp.com",
+            databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com",
+            projectId: "cycling-4545f",
+            storageBucket: "cycling-4545f.firebasestorage.app",
+            messagingSenderId: "1053672969724",
+            appId: "1:1053672969724:web:6eb60a9f30fde781398e79"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function publishNews() {
+            const title = document.getElementById('newsTitle').value;
+            const tag = document.getElementById('newsTag').value || 'News';
+            const content = document.getElementById('newsContent').value;
+
+            if(!title || !content) return alert('ခေါင်းစဉ်နှင့် စာသား ဖြည့်ပါ!');
+
+            db.ref('bicycle_news').push({
+                title: title,
+                tag: tag,
+                content: content,
+                timestamp: Date.now()
+            }).then(() => {
+                alert('သတင်း တင်ပြီးပါပြီ!');
+                document.getElementById('newsTitle').value = '';
+                document.getElementById('newsTag').value = '';
+                document.getElementById('newsContent').value = '';
+            }).catch(err => alert("Error: " + err.message));
+        }
+    </script>
+</body>
+</html>
