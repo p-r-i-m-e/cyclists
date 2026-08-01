@@ -40,7 +40,7 @@
             font-size: 0.95rem;
         }
 
-        /* 🔘 Navigation Tabs (Home Page ရွေးစရာ ခလုတ်များ) */
+        /* 🔘 Navigation Tabs */
         .nav-tabs {
             display: flex;
             gap: 10px;
@@ -73,11 +73,6 @@
             box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
         }
 
-        .tab-btn:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* 📦 Main Content Sections */
         .container {
             max-width: 800px;
             width: 100%;
@@ -86,14 +81,14 @@
         }
 
         .tab-content {
-            display: none; /* နဂိုတွင် ဖျောက်ထားမည် */
+            display: none;
             flex-direction: column;
             gap: 20px;
             animation: fadeIn 0.4s ease;
         }
 
         .tab-content.active {
-            display: flex; /* Active ဖြစ်မှ ပေါ်မည် */
+            display: flex;
         }
 
         @keyframes fadeIn {
@@ -153,7 +148,7 @@
         .call-btn { background: #28a745; color: #ffffff; }
         .map-btn { background: #17a2b8; color: #ffffff; }
 
-        /* 💬 Local Storage Comment Section */
+        /* 💬 COMMENT & REPLY SYSTEM STYLES */
         .comment-box {
             display: flex;
             flex-direction: column;
@@ -187,21 +182,73 @@
         .comment-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
         }
 
         .comment-item {
             background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 12px;
             border-left: 3px solid #00f2fe;
         }
 
         .comment-user {
             font-weight: bold;
-            color: #4facfe;
-            font-size: 0.9rem;
+            color: #00f2fe;
+            font-size: 0.95rem;
             margin-bottom: 4px;
+        }
+
+        .comment-text {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .reply-btn {
+            background: transparent;
+            border: none;
+            color: #4facfe;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .reply-btn:hover { text-decoration: underline; }
+
+        /* ↩️ Reply Box & Replies List */
+        .reply-box {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 2px solid rgba(0, 242, 254, 0.3);
+        }
+
+        .reply-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+            padding-left: 15px;
+        }
+
+        .reply-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 2px solid #4facfe;
+        }
+
+        .reply-user {
+            font-weight: bold;
+            color: #4facfe;
+            font-size: 0.85rem;
         }
 
         /* 🎵 Music Toggle Button */
@@ -235,7 +282,7 @@
         <p>စက်ဘီးဆိုင်များ၊ သတင်းများနှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
     </header>
 
-    <!-- 🔘 ရွေးချယ်စရာ Navigation Tabs -->
+    <!-- 🔘 Navigation Tabs -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('shops')">🏪 စက်ဘီးပြင်/အရောင်းဆိုင်များ</button>
         <button class="tab-btn" onclick="switchTab('news')">📰 Bicycle News</button>
@@ -276,19 +323,13 @@
                 <span class="tag">Tech News</span>
                 <p class="info-p">Mountain Bike စီးသူတွေအတွက် ဈေးနှုန်းနဲ့ တန်ဖိုး မျှတပြီး Performance ကောင်းမွန်တဲ့ Shimano Deore M4100 10-speed Groupset အကြောင်း အသေးစိတ် သုံးသပ်ချက်...</p>
             </div>
-
-            <div class="card">
-                <h3>🏆 မြို့နယ်အလိုက် စက်ဘီးစီးပွဲတော်များ ကျင်းပမည်</h3>
-                <span class="tag">Events</span>
-                <p class="info-p">လာမည့် လဆန်းတွင် စက်ဘီးဝါသနာရှင်များ စုပေါင်း၍ မန္တလေး-ပြင်ဦးလွင် တောင်တက် စက်ဘီးစီးပွဲတော် ကျင်းပသွားမည်ဖြစ်ပါသည်။</p>
-            </div>
         </div>
 
-        <!-- TAB 3: ALL CHAT / COMMENTS -->
+        <!-- TAB 3: ALL CHAT WITH REPLIES -->
         <div id="chat" class="tab-content">
             <div class="card">
                 <h3>💬 စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း (All Chat)</h3>
-                <p class="info-p" style="margin-bottom: 15px;">စက်ဘီးနဲ့ ပတ်သက်တာတွေ မေးမြန်းနိုင်သလို၊ မှတ်ချက် (Comment) ရေးခဲ့လို့ရပါတယ်ခင်ဗျာ -</p>
+                <p class="info-p" style="margin-bottom: 15px;">စက်ဘီးနဲ့ ပတ်သက်တာတွေ မေးမြန်းနိုင်သလို၊ မှတ်ချက် (Comment/Reply) ရေးခဲ့လို့ရပါတယ်ခင်ဗျာ -</p>
                 
                 <div class="comment-box">
                     <input type="text" id="userName" class="name-input" placeholder="သင့်နာမည် ရိုက်ထည့်ပါ...">
@@ -297,7 +338,7 @@
                 </div>
 
                 <div class="comment-list" id="commentList">
-                    <!-- Comments တွေ ဒီမှာ ပေါ်လာပါမယ် -->
+                    <!-- Comments & Replies များ ဒီမှာ ပေါ်လာပါမည် -->
                 </div>
             </div>
         </div>
@@ -314,25 +355,43 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // 🔄 TAB SWITCHING LOGIC (ခလုတ်နှိပ်ရင် စာမျက်နှာပြောင်းရန်)
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
-        // 💬 LOCAL COMMENT SYSTEM
+        // 💬 LOCAL COMMENT & REPLY SYSTEM
         function loadComments() {
             const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
             const list = document.getElementById('commentList');
             list.innerHTML = '';
-            comments.forEach(c => {
+
+            comments.forEach((c, index) => {
+                let repliesHtml = '';
+                if (c.replies && c.replies.length > 0) {
+                    repliesHtml = '<div class="reply-list">' + c.replies.map(r => `
+                        <div class="reply-item">
+                            <div class="reply-user">↩️ ${r.name}</div>
+                            <div class="comment-text">${r.text}</div>
+                        </div>
+                    `).join('') + '</div>';
+                }
+
                 list.innerHTML += `
                     <div class="comment-item">
                         <div class="comment-user">👤 ${c.name}</div>
-                        <div>${c.text}</div>
+                        <div class="comment-text">${c.text}</div>
+                        <button class="reply-btn" onclick="toggleReplyBox(${index})">💬 Reply ပြန်မည်</button>
+                        
+                        <div class="reply-box" id="replyBox-${index}">
+                            <input type="text" id="replyName-${index}" class="name-input" placeholder="သင့်နာမည်...">
+                            <input type="text" id="replyText-${index}" class="comment-input" placeholder="Reply စာရေးပါ...">
+                            <button class="send-btn" style="padding: 6px; font-size: 0.85rem;" onclick="postReply(${index})">Send Reply 🚀</button>
+                        </div>
+
+                        ${repliesHtml}
                     </div>
                 `;
             });
@@ -344,10 +403,29 @@
             if (!text) return alert('ကျေးဇူးပြု၍ စာရိုက်ထည့်ပါခင်ဗျာ!');
 
             const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
-            comments.unshift({ name, text });
+            comments.unshift({ name, text, replies: [] });
             localStorage.setItem('cycling_comments', JSON.stringify(comments));
 
             document.getElementById('userComment').value = '';
+            loadComments();
+        }
+
+        function toggleReplyBox(index) {
+            const box = document.getElementById(`replyBox-${index}`);
+            box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function postReply(index) {
+            const name = document.getElementById(`replyName-${index}`).value || 'Anonymous Cyclist';
+            const text = document.getElementById(`replyText-${index}`).value;
+            if (!text) return alert('ကျေးဇူးပြု၍ Reply စာရိုက်ထည့်ပါခင်ဗျာ!');
+
+            const comments = JSON.parse(localStorage.getItem('cycling_comments') || '[]');
+            if (!comments[index].replies) comments[index].replies = [];
+            
+            comments[index].replies.push({ name, text });
+            localStorage.setItem('cycling_comments', JSON.stringify(comments));
+
             loadComments();
         }
 
