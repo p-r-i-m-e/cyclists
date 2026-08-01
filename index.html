@@ -72,7 +72,7 @@
     </div>
 
     <main>
-        <!-- 🛠️ TAB 1: SHOPS -->
+           <!-- 🛠️ TAB 1: SHOPS -->
         <div id="shops" class="tab-content active">
             <div class="card">
                 <h3 class="card-title"><i class="fa-solid fa-wrench"></i> Pro Bike Service Shop</h3>
@@ -87,6 +87,7 @@
                 <span class="tag" style="margin-top:8px;">Services Available</span>
             </div>
         </div>
+
 
         <!-- 📰 TAB 2: NEWS (Google Sheet) -->
         <div id="news" class="tab-content">
@@ -284,6 +285,36 @@
     }
 
     fetchNewsFromSheet();
+    // 🔍 Shops Search Filter Function
+function searchShops() {
+    const filter = document.getElementById('shopSearchInput').value.toLowerCase();
+    const shopCards = document.querySelectorAll('#shopsContainer .shop-card');
+    let hasResults = false;
+
+    shopCards.forEach(card => {
+        const text = card.textContent || card.innerText;
+        if (text.toLowerCase().indexOf(filter) > -1) {
+            card.style.display = "";
+            hasResults = true;
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    // ရှာဖွေမှုမတွေ့ပါက Message ပြရန်
+    let noResultMsg = document.getElementById('noShopMsg');
+    if (!hasResults) {
+        if (!noResultMsg) {
+            const msgBox = document.createElement('p');
+            msgBox.id = 'noShopMsg';
+            msgBox.style.cssText = 'text-align:center; color:#cfd8dc; margin-top:20px;';
+            msgBox.innerHTML = '❌ ရှာဖွေသော လိပ်စာ သို့မဟုတ် ဆိုင်နာမည် မတွေ့ရှိပါ။';
+            document.getElementById('shopsContainer').appendChild(msgBox);
+        }
+    } else if (noResultMsg) {
+        noResultMsg.remove();
+    }
+}
 </script>
 
 </body>
