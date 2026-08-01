@@ -27,24 +27,45 @@
             max-width: 800px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 20px;
             margin-top: 5px;
-            padding: 0 10px;
+            padding: 0 5px;
         }
 
         .header-title h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #00f2fe;
             text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
         }
 
         .header-title p {
             color: #cfd8dc;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
         }
 
-        /* 👤 Header Profile Button */
+        /* 🔗 Home, About, Contact Sub-links */
+        .sub-nav {
+            display: flex;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .sub-nav a {
+            color: #4facfe;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .sub-nav a:hover {
+            color: #00f2fe;
+            text-decoration: underline;
+        }
+
+        /* 👤 Profile Button */
         .profile-icon-btn {
             background: rgba(0, 242, 254, 0.15);
             border: 1px solid #00f2fe;
@@ -52,13 +73,14 @@
             padding: 8px 14px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 6px;
             backdrop-filter: blur(10px);
             transition: 0.3s;
+            white-space: nowrap;
         }
 
         .profile-icon-btn:hover {
@@ -78,16 +100,18 @@
             z-index: 5;
             flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
+            max-width: 800px;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
             color: #ffffff;
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             transition: all 0.3s ease;
         }
@@ -132,7 +156,7 @@
 
         .card h3 { color: #4facfe; font-size: 1.2rem; margin-bottom: 8px; }
         .tag { display: inline-block; background: rgba(0, 242, 254, 0.2); color: #00f2fe; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; margin-bottom: 10px; }
-        .info-p { font-size: 0.95rem; color: #e0e0e0; line-height: 1.6; margin-bottom: 6px; }
+        .info-p { font-size: 0.9rem; color: #e0e0e0; line-height: 1.6; margin-bottom: 6px; }
         .btn-group { display: flex; gap: 10px; margin-top: 12px; }
         
         .action-btn { display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px; border-radius: 8px; text-decoration: none; font-size: 0.85rem; font-weight: bold; }
@@ -143,7 +167,7 @@
         .chat-card {
             display: flex;
             flex-direction: column;
-            height: 65vh;
+            height: 60vh;
             padding: 15px;
         }
 
@@ -182,8 +206,8 @@
             background: rgba(0, 242, 254, 0.2);
         }
 
-        .comment-user { font-weight: bold; color: #00f2fe; font-size: 0.85rem; margin-bottom: 2px; }
-        .comment-text { color: #ffffff; font-size: 0.95rem; word-break: break-word; }
+        .comment-user { font-weight: bold; color: #00f2fe; font-size: 0.8rem; margin-bottom: 2px; }
+        .comment-text { color: #ffffff; font-size: 0.9rem; word-break: break-word; }
 
         .chat-input-area {
             display: flex;
@@ -201,7 +225,7 @@
             border: none; 
             background: transparent; 
             color: #ffffff !important; 
-            font-size: 0.95rem !important;
+            font-size: 0.9rem !important;
             outline: none; 
         }
         
@@ -210,6 +234,18 @@
         .btn { padding: 8px 16px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-primary { background: #00f2fe; color: #000; }
         .btn-danger { background: #ff4757; color: #fff; }
+
+        /* 🔒 LOCKED CHAT OVERLAY */
+        .chat-login-prompt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            gap: 12px;
+            color: #a0aec0;
+        }
 
         /* 📱 PROFILE MODAL (POP-UP PAGE) */
         .modal-overlay {
@@ -246,22 +282,32 @@
             cursor: pointer;
         }
 
-        footer { text-align: center; color: #90a4ae; font-size: 0.85rem; }
+        footer { text-align: center; color: #90a4ae; font-size: 0.8rem; margin-top: auto; }
     </style>
 </head>
 <body>
 
-    <!-- HEADER WITH TOP-RIGHT PROFILE ICON -->
+    <!-- HEADER -->
     <header>
         <div class="header-title">
             <h1>🚴‍♂️ Myanmar Cycling Hub</h1>
             <p>စက်ဘီးဆိုင်များ နှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
+            
+            <!-- 🔗 HOME, ABOUT, CONTACT SUB LINKS -->
+            <div class="sub-nav">
+                <a href="#" onclick="switchTab('shops')">Home</a>
+                <a href="#" onclick="alert('Myanmar Cycling Hub - စက်ဘီးဝါသနာရှင်များအတွက် သတင်းနှင့် ပြင်ဆိုင်များ စုစည်းရာနေရာ ဖြစ်ပါသည်။')">About</a>
+                <a href="#" onclick="alert('Contact Us: myanmarcyclinghub@gmail.com')">Contact</a>
+            </div>
         </div>
+        
+        <!-- 👤 ACCOUNT BUTTON IN HEADER -->
         <button class="profile-icon-btn" onclick="openProfileModal()">
             👤 <span id="headerProfileName">Account</span>
         </button>
     </header>
 
+    <!-- NAVIGATION TABS -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('shops', event)">🏪 စက်ဘီးပြင်/အရောင်းဆိုင်များ</button>
         <button class="tab-btn" onclick="switchTab('news', event)">📰 Bicycle News</button>
@@ -304,21 +350,28 @@
             </div>
         </div>
 
-        <!-- TAB 3: TELEGRAM STYLE CHAT GROUP -->
+        <!-- TAB 3: ALL CHAT (LOCKED FOR GUESTS) -->
         <div id="chat" class="tab-content">
             <div class="card chat-card">
                 <div class="chat-header">
                     <h3>💬 Cycling Community Group</h3>
                     <span style="font-size:0.8rem; color:#00f2fe;">● Live Chat</span>
                 </div>
-                
-                <div class="chat-messages" id="commentsList">
-                    <!-- Realtime Chat Messages -->
+
+                <!-- CHAT CONTAINER WHEN LOGGED IN -->
+                <div id="chatActiveContainer" style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="chat-messages" id="commentsList"></div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" class="input-field" placeholder="Message ရေးပါ..." onkeypress="handleKeyPress(event)">
+                        <button class="btn btn-primary" onclick="sendRealtimeComment()">Send 🚀</button>
+                    </div>
                 </div>
 
-                <div class="chat-input-area">
-                    <input type="text" id="chatInput" class="input-field" placeholder="Message ရေးပါ..." onkeypress="handleKeyPress(event)">
-                    <button class="btn btn-primary" onclick="sendRealtimeComment()">Send 🚀</button>
+                <!-- PROMPT WHEN NOT LOGGED IN -->
+                <div id="chatLockedContainer" class="chat-login-prompt" style="display: none;">
+                    <p>🔒 All Chat ကို အသုံးပြုရန် အကောင့်ဝင်ရန် လိုအပ်ပါသည်။</p>
+                    <button class="btn btn-primary" onclick="openProfileModal()">🔑 Login / Sign Up ပြုလုပ်မည်</button>
                 </div>
             </div>
         </div>
@@ -365,9 +418,16 @@
         function switchTab(tabId, evt) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
+            
+            const targetTab = document.getElementById(tabId);
+            if(targetTab) targetTab.classList.add('active');
+
             if (evt && evt.currentTarget) {
                 evt.currentTarget.classList.add('active');
+            } else {
+                // If clicked from Home sub-link
+                const btns = document.querySelectorAll('.tab-btn');
+                if(tabId === 'shops') btns[0].classList.add('active');
             }
         }
 
@@ -380,15 +440,15 @@
         }
 
         // 🔑 FIREBASE CONFIGURATION
-       const firebaseConfig = {
-    apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
-    authDomain: "cycling-4545f.firebaseapp.com",
-    databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com", // <-- ဒီနေရာ တိကျရပါမယ်
-    projectId: "cycling-4545f",
-    storageBucket: "cycling-4545f.firebasestorage.app",
-    messagingSenderId: "1053672969724",
-    appId: "1:1053672969724:web:6eb60a9f30fde781398e79"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
+            authDomain: "cycling-4545f.firebaseapp.com",
+            databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com",
+            projectId: "cycling-4545f",
+            storageBucket: "cycling-4545f.firebasestorage.app",
+            messagingSenderId: "1053672969724",
+            appId: "1:1053672969724:web:6eb60a9f30fde781398e79"
+        };
         firebase.initializeApp(firebaseConfig);
 
         const auth = firebase.auth();
@@ -403,11 +463,19 @@
                 document.getElementById('modalUserName').innerText = currentUserDisplayName;
                 document.getElementById('modalLoggedInView').style.display = 'block';
                 document.getElementById('modalLoggedOutView').style.display = 'none';
+
+                // Unlock Chat UI
+                document.getElementById('chatActiveContainer').style.display = 'flex';
+                document.getElementById('chatLockedContainer').style.display = 'none';
             } else {
                 currentUserDisplayName = "";
                 document.getElementById('headerProfileName').innerText = "Account";
                 document.getElementById('modalLoggedInView').style.display = 'none';
                 document.getElementById('modalLoggedOutView').style.display = 'block';
+
+                // Lock Chat UI
+                document.getElementById('chatActiveContainer').style.display = 'none';
+                document.getElementById('chatLockedContainer').style.display = 'flex';
             }
         });
 
@@ -473,24 +541,27 @@
             if (e.key === 'Enter') sendRealtimeComment();
         }
 
-     // 🚀 SEND REALTIME COMMENT (GUEST & AUTH BOTH ALLOWED)
-function sendRealtimeComment() {
-    const text = document.getElementById('chatInput').value;
-    if (!text.trim()) return;
+        // 🚀 SEND REALTIME COMMENT
+        function sendRealtimeComment() {
+            if (!auth.currentUser) {
+                alert('စာမပို့မီ အကောင့်အရင်ဝင်ပေးပါ!');
+                openProfileModal();
+                return;
+            }
 
-    // အကောင့်ဝင်ထားရင် အကောင့်နာမည်သုံးမည်၊ မဝင်ထားရင် Guest အဖြစ်ပို့မည်
-    const senderName = currentUserDisplayName || "Guest Rider";
+            const text = document.getElementById('chatInput').value;
+            if (!text.trim()) return;
 
-    db.ref('global_comments').push({
-        userName: senderName,
-        text: text,
-        timestamp: Date.now()
-    }).then(() => {
-        document.getElementById('chatInput').value = '';
-    }).catch(err => {
-        alert("Firebase Error: " + err.message);
-    });
-}
+            db.ref('global_comments').push({
+                userName: currentUserDisplayName,
+                text: text,
+                timestamp: Date.now()
+            }).then(() => {
+                document.getElementById('chatInput').value = '';
+            }).catch(err => {
+                alert("Error: " + err.message);
+            });
+        }
     </script>
 </body>
 </html>
