@@ -3,113 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyclists Website</title>
+    <title>Myanmar Cycling Hub</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
         }
+
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        header {
-            text-align: center;
-            padding: 20px 0;
-        }
-        h1 {
-            color: #00f2fe;
-            margin-bottom: 10px;
-        }
-        .nav-tabs {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 15px;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 🔝 Header Styles */
+        header {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 20px;
-            justify-content: center;
+            margin-top: 5px;
+            padding: 0 5px;
         }
+
+        .header-title h1 {
+            font-size: 1.6rem;
+            color: #00f2fe;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+
+        .header-title p {
+            color: #cfd8dc;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+        }
+
+        /* 🔗 Navigation Links */
+        .sub-nav {
+            display: flex;
+            gap: 15px;
+            margin-top: 6px;
+        }
+
+        .sub-nav a {
+            color: #4facfe;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .sub-nav a:hover, .sub-nav a.active {
+            color: #00f2fe;
+            text-decoration: underline;
+        }
+
+        /* 📱 Navigation Tabs */
+        .nav-tabs {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+
         .tab-btn {
-            background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #334155;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: #cfd8dc;
             font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 10px;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        .tab-btn.active, .tab-btn:hover {
-            background: #00f2fe;
-            color: #0f172a;
-            border-color: #00f2fe;
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: #0f2027;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
         }
+
+        /* 📱 Container & Content Cards */
+        main {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
         .tab-content {
             display: none;
         }
+
         .tab-content.active {
             display: block;
         }
+
         .card {
-            background: #1e293b;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
             padding: 20px;
             margin-bottom: 15px;
-            border: 1px solid #334155;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
+
+        .card-title {
+            color: #00f2fe;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
         .info-p {
-            color: #cbd5e1;
+            color: #e0e0e0;
+            font-size: 0.9rem;
             line-height: 1.6;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(0, 242, 254, 0.15);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: #00f2fe;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
+
+        /* 💬 Chat Box Styles */
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 5px;
+            margin-bottom: 15px;
+        }
+
+        .chat-message {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 85%;
+        }
+
+        .chat-user {
+            font-size: 0.8rem;
+            color: #00f2fe;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .chat-text {
+            font-size: 0.88rem;
+            color: #ffffff;
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-field {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .input-field:focus {
+            border-color: #00f2fe;
+        }
+
+        .btn-send {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            color: #0f2027;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        footer { 
+            text-align: center; 
+            color: #90a4ae; 
+            font-size: 0.8rem; 
+            margin-top: auto;
+            padding: 10px 0;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+    <!-- Header Navigation -->
     <header>
-        <h1>🚴‍♂️ Cyclists Portal</h1>
-        <p style="color: #94a3b8;">Welcome to our Cyclists Club</p>
+        <div class="header-title">
+            <h1>🚴‍♂️ Myanmar Cycling Hub</h1>
+            <p>စက်ဘီးဆိုင်များ နှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
+
+            <div class="sub-nav">
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
     </header>
 
-    <!-- Navigation Tabs -->
+    <!-- Main Navigation Tabs -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('home')">Home</button>
-        <button class="tab-btn" onclick="switchTab('news')">Bicycle News</button>
+        <button class="tab-btn active" onclick="switchTab('shops', event)">
+            <i class="fa-solid fa-store"></i> Shops
+        </button>
+        <button class="tab-btn" onclick="switchTab('news', event)">
+            <i class="fa-solid fa-newspaper"></i> News
+        </button>
+        <button class="tab-btn" onclick="switchTab('chat', event)">
+            <i class="fa-solid fa-comments"></i> Live Chat
+        </button>
     </div>
 
-    <!-- TAB 1: HOME -->
-    <div id="home" class="tab-content active">
-        <div class="card">
-            <h2 style="color: #00f2fe; margin-bottom: 10px;">ကြိုဆိုပါတယ်!</h2>
-            <p class="info-p">စက်ဘီးချစ်သူများအတွက် သတင်းများနှင့် ဗဟုသုတများကို စုစည်းဖော်ပြပေးထားသော နေရာဖြစ်ပါသည်။</p>
-        </div>
-    </div>
+    <main>
+        <!-- 🛠️ TAB 1: BICYCLE SHOPS -->
+        <div id="shops" class="tab-content active">
+            <div class="card">
+                <h3 class="card-title"><i class="fa-solid fa-wrench"></i> Pro Bike Service Shop</h3>
+                <p class="info-p"><b>ဝန်ဆောင်မှု:</b> စက်ဘီးပြင်ဆင်ခြင်း၊ ဂီယာချိန်ခြင်း၊ Hydro Brake လေထုတ်ခြင်း။</p>
+                <p class="info-p"><b>လိပ်စာ:</b> မန္တလေးမြို့။</p>
+                <span class="tag" style="margin-top:8px;">Open Daily</span>
+            </div>
 
-    <!-- TAB 2: NEWS (Google Sheets Connected) -->
-    <div id="news" class="tab-content">
-        <div id="newsContainer">
-            <p style="text-align:center; color:#aaa;">သတင်းများကို လုဒ်ဆွဲနေပါသည်...</p>
+            <div class="card">
+                <h3 class="card-title"><i class="fa-solid fa-bicycle"></i> Cycling World Workshop</h3>
+                <p class="info-p"><b>ဝန်ဆောင်မှု:</b> စက်ဘီးပစ္စည်းစုံ ရောင်းဝယ်ရေးနှင့် အပိုပစ္စည်းလဲလှယ်ပေးခြင်း။</p>
+                <p class="info-p"><b>လိပ်စာ:</b> ရန်ကုန်မြို့။</p>
+                <span class="tag" style="margin-top:8px;">Services Available</span>
+            </div>
         </div>
-    </div>
-</div>
+
+        <!-- 📰 TAB 2: NEWS (Google Sheet မှ Auto ဆွဲယူမည့်နေရာ) -->
+        <div id="news" class="tab-content">
+            <div id="newsContainer">
+                <p style="text-align:center; color:#cfd8dc;">သတင်းများကို လုဒ်ဆွဲနေပါသည်...</p>
+            </div>
+        </div>
+
+        <!-- 💬 TAB 3: LIVE CHAT BOX -->
+        <div id="chat" class="tab-content">
+            <div class="card">
+                <h3 class="card-title" style="margin-bottom:12px;"><i class="fa-solid fa-comments"></i> Cyclists Chat Room</h3>
+                
+                <div class="chat-box" id="chatBox">
+                    <div class="chat-message">
+                        <div class="chat-user">Admin</div>
+                        <div class="chat-text">Myanmar Cycling Hub စကားဝိုင်းမှ ကြိုဆိုပါတယ်။ စက်ဘီးအကြောင်းများ လွတ်လပ်စွာ ဆွေးနွေးနိုင်ပါတယ်ဗျ။</div>
+                    </div>
+                </div>
+
+                <div class="chat-input-group">
+                    <input type="text" id="userName" placeholder="သင့်အမည်..." class="input-field" style="max-width: 30%;">
+                    <input type="text" id="chatMsg" placeholder="စာရိုက်ပါ..." class="input-field">
+                    <button class="btn-send" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Myanmar Cycling Hub. All rights reserved.</p>
+    </footer>
 
 <script>
-    // Tab ပြောင်းလဲကြည့်ရှုသည့် Function
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    // 🔄 Tab များ ကူးပြောင်းသည့် Function
+    function switchTab(tabId, event) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
         
         document.getElementById(tabId).classList.add('active');
         event.currentTarget.classList.add('active');
     }
 
-    // 🔗 Google Sheet မှ Data ဆွဲယူပြသခြင်း (Google Visualization API)
+    // 🔗 Google Sheet မှ သတင်းများ ဆွဲယူမည့် Code (Google Visualization API)
     const sheetID = "1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8";
     const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
@@ -117,18 +322,17 @@
         fetch(sheetURL)
             .then(res => res.text())
             .then(data => {
-                // Google Sheet ကပြန်ပို့သော JSON Data ကို စစ်ထုတ်ခြင်း
                 const json = JSON.parse(data.substring(47, data.length - 2));
                 const rows = json.table.rows;
                 const container = document.getElementById('newsContainer');
                 container.innerHTML = '';
 
                 if (!rows || rows.length === 0) {
-                    container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ မရှိသေးပါ။</p>';
+                    container.innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ မရှိသေးပါ။</p>';
                     return;
                 }
 
-                // သတင်းအသစ်များကို အပေါ်ဆုံးတွင် ပြရန် reverse() သုံးထားပါသည်
+                // သတင်းအသစ်များကို အပေါ်ဆုံးတွင် ပြရန် reverse() သုံးထားသည်
                 rows.slice().reverse().forEach(row => {
                     const title = row.c && row.c[0] ? row.c[0].v : '';
                     const date = row.c && row.c[1] ? row.c[1].v : '';
@@ -137,8 +341,8 @@
                     if (title || content) {
                         container.innerHTML += `
                             <div class="card">
-                                ${date ? `<span style="float:right; font-size:0.8rem; color:#00f2fe;">${date}</span>` : ''}
-                                <h3 style="color:#00f2fe; margin-bottom:10px;">${title}</h3>
+                                ${date ? `<span class="tag" style="float:right;">${date}</span>` : ''}
+                                <h3 class="card-title">${title}</h3>
                                 <p class="info-p" style="white-space: pre-line;">${content}</p>
                             </div>
                         `;
@@ -148,14 +352,33 @@
             .catch(err => {
                 console.error(err);
                 document.getElementById('newsContainer').innerHTML = `
-                    <p style="text-align:center; color:#aaa;">
+                    <p style="text-align:center; color:#cfd8dc;">
                         သတင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet ၏ Share Settings တွင် <br>
-                        <b>"Anyone with the link"</b> သို့ ပြောင်းထားခြင်း ရှိမရှိ စစ်ဆေးပေးပါ။
+                        <b>"Anyone with the link"</b> ပြောင်းထားခြင်း ရှိမရှိ စစ်ဆေးပေးပါ။
                     </p>`;
             });
     }
 
-    // သတင်းများ အလိုအလျောက် ဆွဲယူခေါ်ယူမည်
+    // 💬 Demo Chat မက်ဆေ့ခ်ျ ပို့သည့် Function
+    function sendChatMessage() {
+        const name = document.getElementById('userName').value.trim() || 'Anonymous';
+        const msg = document.getElementById('chatMsg').value.trim();
+        const chatBox = document.getElementById('chatBox');
+
+        if (!msg) return;
+
+        chatBox.innerHTML += `
+            <div class="chat-message" style="align-self: flex-end; background: rgba(0, 242, 254, 0.15); border-color: rgba(0, 242, 254, 0.3);">
+                <div class="chat-user" style="text-align:right;">${name}</div>
+                <div class="chat-text">${msg}</div>
+            </div>
+        `;
+
+        document.getElementById('chatMsg').value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // စတင်ချိန်တွင် Google Sheet မှ သတင်းများ ခေါ်ယူမည်
     fetchNewsFromSheet();
 </script>
 
