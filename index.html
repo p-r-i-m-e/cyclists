@@ -34,6 +34,12 @@
         .info-p { color: #e0e0e0; font-size: 0.9rem; line-height: 1.6; }
         .tag { display: inline-block; background: rgba(0, 242, 254, 0.15); border: 1px solid rgba(0, 242, 254, 0.3); color: #00f2fe; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; }
 
+        /* Search Bar & Inputs */
+        .search-box { position: relative; margin-bottom: 20px; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #00f2fe; font-size: 1rem; }
+        .search-input { width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 242, 254, 0.4); padding: 12px 15px 12px 42px; border-radius: 12px; color: #fff; outline: none; font-size: 0.95rem; transition: 0.3s; }
+        .search-input:focus { border-color: #00f2fe; box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
+
         /* Chat & Auth UI */
         .chat-box { height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px; margin-bottom: 15px; }
         .chat-message { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 14px; border-radius: 12px; max-width: 80%; }
@@ -72,22 +78,32 @@
     </div>
 
     <main>
-           <!-- 🛠️ TAB 1: SHOPS -->
+        <!-- 🛠️ TAB 1: SHOPS -->
         <div id="shops" class="tab-content active">
-            <div class="card">
-                <h3 class="card-title"><i class="fa-solid fa-wrench"></i> Pro Bike Service Shop</h3>
-                <p class="info-p"><b>ဝန်ဆောင်မှု:</b> စက်ဘီးပြင်ဆင်ခြင်း၊ ဂီယာချိန်ခြင်း၊ Hydro Brake လေထုတ်ခြင်း။</p>
-                <p class="info-p"><b>လိပ်စာ:</b> မန္တလေးမြို့။</p>
-                <span class="tag" style="margin-top:8px;">Open Daily</span>
+            
+            <!-- 🔍 Search Bar -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="shopSearchInput" onkeyup="searchShops()" placeholder="မြို့နယ် သို့မဟုတ် လမ်းအမည် ရိုက်ရှာပါ..." class="search-input">
             </div>
-            <div class="card">
-                <h3 class="card-title"><i class="fa-solid fa-bicycle"></i> Cycling World Workshop</h3>
-                <p class="info-p"><b>ဝန်ဆောင်မှု:</b> စက်ဘီးပစ္စည်းစုံ ရောင်းဝယ်ရေးနှင့် အပိုပစ္စည်းလဲလှယ်ပေးခြင်း။</p>
-                <p class="info-p"><b>လိပ်စာ:</b> ရန်ကုန်မြို့။</p>
-                <span class="tag" style="margin-top:8px;">Services Available</span>
+
+            <!-- 🚲 Shop List Container -->
+            <div id="shopsContainer">
+                <div class="card shop-card">
+                    <h3 class="card-title"><i class="fa-solid fa-wrench"></i> Pro Bike Service Shop</h3>
+                    <p class="info-p"><b>ဝန်ဆောင်မှု:</b> စက်ဘီးပြင်ဆင်ခြင်း၊ ဂီယာချိန်ခြင်း၊ Hydro Brake လေထုတ်ခြင်း။</p>
+                    <p class="info-p"><b>လိပ်စာ:</b> မန္တလေးမြို့၊ ၇၃ လမ်း။</p>
+                    <span class="tag" style="margin-top:8px;">Open Daily</span>
+                </div>
+
+                <div class="card shop-card">
+                    <h3 class="card-title"><i class="fa-solid fa-bicycle"></i> Cycling World Workshop</h3>
+                    <p class="info-p"><b>ဝန်ဆောင်မှု:</b> စက်ဘီးပစ္စည်းစုံ ရောင်းဝယ်ရေးနှင့် အပိုပစ္စည်းလဲလှယ်ပေးခြင်း။</p>
+                    <p class="info-p"><b>လိပ်စာ:</b> ရန်ကုန်မြို့၊ ပြည်လမ်း။</p>
+                    <span class="tag" style="margin-top:8px;">Services Available</span>
+                </div>
             </div>
         </div>
-
 
         <!-- 📰 TAB 2: NEWS (Google Sheet) -->
         <div id="news" class="tab-content">
@@ -99,20 +115,20 @@
         <!-- 💬 TAB 3: FIREBASE LIVE CHAT -->
         <div id="chat" class="tab-content">
             
-            <!-- 🔒 Login / Sign Up Form (အကောင့်မဝင်ရသေးပါက ပေါ်မည်) -->
+            <!-- 🔒 Auth Section -->
             <div id="authSection" class="card auth-container">
                 <h3 class="card-title" id="authTitle"><i class="fa-solid fa-user-lock"></i> အကောင့်ဝင်ပါ</h3>
                 <p class="info-p" style="margin-bottom: 15px;">Live Chat တွင် ပါဝင်ဆွေးနွေးရန် အကောင့်ဝင်ရန် လိုအပ်ပါသည်။</p>
 
                 <input type="text" id="authName" placeholder="သင့်အမည် (Username)" class="input-field" style="display:none;">
                 <input type="email" id="authEmail" placeholder="အီးမေးလ် (Email)" class="input-field">
-                <input type="password" id="authPass" placeholder="စကားဝှက် (Password - အနည်းဆုံး ၆ လုံး)" class="input-field">
+                <input type="password" id="authPass" placeholder="စကားဝှက် (Password)" class="input-field">
 
                 <button class="btn-action" style="width: 100%; margin-bottom: 12px;" onclick="handleAuth()" id="authBtn">အကောင့်ဝင်မည်</button>
                 <p class="info-p"><span id="toggleText">အကောင့်မရှိသေးပါက</span> <span class="auth-toggle" onclick="toggleAuthMode()">အကောင့်သစ်ဖွင့်ပါ</span></p>
             </div>
 
-            <!-- 💬 Realtime Chat Box (အကောင့်ဝင်ပြီးပါက ပေါ်မည်) -->
+            <!-- 💬 Chat Section -->
             <div id="chatSection" class="card" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <h3 class="card-title" style="margin: 0;"><i class="fa-solid fa-comments"></i> Cyclists Chat Room</h3>
@@ -135,24 +151,35 @@
     </footer>
 
 <script>
-    // ⚙️ Firebase Config (သင့် Firebase Project Keys များနှင့် အစားထိုးပါ)= {
-    const firebaseConfig = {
-  apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
-  authDomain: "cycling-4545f.firebaseapp.com",
-  databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com",
-  projectId: "cycling-4545f",
-  storageBucket: "cycling-4545f.firebasestorage.app",
-  messagingSenderId: "1053672969724",
-  appId: "1:1053672969724:web:6eb60a9f30fde781398e79",
-  measurementId: "G-0M5GZHKV3J"
-};
+    // 🔍 Shops Search Filter Function
+    function searchShops() {
+        const filter = document.getElementById('shopSearchInput').value.toLowerCase();
+        const shopCards = document.querySelectorAll('.shop-card');
+        let hasResults = false;
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.database();
+        shopCards.forEach(card => {
+            const text = card.textContent || card.innerText;
+            if (text.toLowerCase().indexOf(filter) > -1) {
+                card.style.display = "";
+                hasResults = true;
+            } else {
+                card.style.display = "none";
+            }
+        });
 
-    let isSignUp = false;
-    let currentUser = null;
+        let noResultMsg = document.getElementById('noShopMsg');
+        if (!hasResults) {
+            if (!noResultMsg) {
+                const msgBox = document.createElement('p');
+                msgBox.id = 'noShopMsg';
+                msgBox.style.cssText = 'text-align:center; color:#cfd8dc; margin-top:20px;';
+                msgBox.innerHTML = '❌ ရှာဖွေသော လိပ်စာ သို့မဟုတ် ဆိုင်နာမည် မတွေ့ရှိပါ။';
+                document.getElementById('shopsContainer').appendChild(msgBox);
+            }
+        } else if (noResultMsg) {
+            noResultMsg.remove();
+        }
+    }
 
     // 🔄 Tab Switch
     function switchTab(tabId, event) {
@@ -162,7 +189,24 @@
         event.currentTarget.classList.add('active');
     }
 
-    // 🔑 Auth Mode Toggle
+    // ⚙️ Firebase Config (သင့် Firebase Project Keys များထည့်ရန်)
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    let isSignUp = false;
+    let currentUser = null;
+
     function toggleAuthMode() {
         isSignUp = !isSignUp;
         document.getElementById('authTitle').innerHTML = isSignUp ? '<i class="fa-solid fa-user-plus"></i> အကောင့်သစ်ဖွင့်ပါ' : '<i class="fa-solid fa-user-lock"></i> အကောင့်ဝင်ပါ';
@@ -171,7 +215,6 @@
         document.getElementById('toggleText').innerText = isSignUp ? 'အကောင့်ရှိပြီးသားဖြစ်ပါက' : 'အကောင့်မရှိသေးပါက';
     }
 
-    // 🚀 Login & Sign Up Handling
     function handleAuth() {
         const email = document.getElementById('authEmail').value;
         const pass = document.getElementById('authPass').value;
@@ -190,10 +233,8 @@
         }
     }
 
-    // 🚪 Logout
     function logout() { auth.signOut(); }
 
-    // 👤 Auth State Observer (အကောင့်ဝင်/ထွက် စောင့်ကြည့်ခြင်း)
     auth.onAuthStateChanged(user => {
         currentUser = user;
         if (user) {
@@ -206,7 +247,6 @@
         }
     });
 
-    // 💬 Send Chat Message to Firebase
     function sendChatMessage() {
         const msgInput = document.getElementById('chatMsg');
         const msg = msgInput.value.trim();
@@ -222,7 +262,6 @@
         msgInput.value = '';
     }
 
-    // 📡 Load Realtime Chat Messages
     function loadChatMessages() {
         db.ref('global_chat').limitToLast(50).on('value', snapshot => {
             const chatBox = document.getElementById('chatBox');
@@ -285,36 +324,6 @@
     }
 
     fetchNewsFromSheet();
-    // 🔍 Shops Search Filter Function
-function searchShops() {
-    const filter = document.getElementById('shopSearchInput').value.toLowerCase();
-    const shopCards = document.querySelectorAll('#shopsContainer .shop-card');
-    let hasResults = false;
-
-    shopCards.forEach(card => {
-        const text = card.textContent || card.innerText;
-        if (text.toLowerCase().indexOf(filter) > -1) {
-            card.style.display = "";
-            hasResults = true;
-        } else {
-            card.style.display = "none";
-        }
-    });
-
-    // ရှာဖွေမှုမတွေ့ပါက Message ပြရန်
-    let noResultMsg = document.getElementById('noShopMsg');
-    if (!hasResults) {
-        if (!noResultMsg) {
-            const msgBox = document.createElement('p');
-            msgBox.id = 'noShopMsg';
-            msgBox.style.cssText = 'text-align:center; color:#cfd8dc; margin-top:20px;';
-            msgBox.innerHTML = '❌ ရှာဖွေသော လိပ်စာ သို့မဟုတ် ဆိုင်နာမည် မတွေ့ရှိပါ။';
-            document.getElementById('shopsContainer').appendChild(msgBox);
-        }
-    } else if (noResultMsg) {
-        noResultMsg.remove();
-    }
-}
 </script>
 
 </body>
