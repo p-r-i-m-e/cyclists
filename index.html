@@ -284,11 +284,11 @@
             <p>စက်ဘီးဆိုင်များ နှင့် စက်ဘီးဝါသနာရှင်များ စကားဝိုင်း</p>
             
           <!-- 🔗 HOME, ABOUT, CONTACT SUB LINKS -->
-<div class="sub-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-</div>
+          <div class="sub-nav">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="contact.html">Contact</a>
+          </div>
         </div>
         
         <!-- 👤 ACCOUNT & CHAT BUTTONS AT TOP RIGHT -->
@@ -334,28 +334,13 @@
                 </div>
             </div>
         </div>
-<!-- TAB 2: NEWS -->
-<div id="news" class="tab-content">
-    
-    <!-- 🔑 Admin Box ဖွင့်/ပိတ် လုပ်ရန် Secret Button သေးသေးလေး -->
-    <div style="text-align: right; margin-bottom: 10px;">
-        <button onclick="toggleAdminPanel()" style="background:none; border:none; color:rgba(255,255,255,0.2); font-size:0.7rem; cursor:pointer;">🔑 Admin</button>
-    </div>
 
-    <!-- 🔒 Secret Admin Box (ပုံမှန်အချိန်တွင် ကွယ်ထားပါမည်) -->
-    <div id="adminFormBox" class="card" style="display: none; border: 1px solid #00f2fe; margin-bottom: 20px; background: rgba(0, 242, 254, 0.05);">
-        <h4 style="color:#00f2fe; margin-bottom: 10px;">✍️ သတင်းအသစ် တင်မည် (Admin Only)</h4>
-        <input type="password" id="adminPass" placeholder="Admin Passcode (1234)..." class="input-field" style="margin-bottom: 8px;">
-        <input type="text" id="newsTitle" placeholder="သတင်းခေါင်းစဉ်..." class="input-field" style="margin-bottom: 8px;">
-        <textarea id="newsContent" placeholder="သတင်းအကြောင်းအရာ ရေးပါ..." class="input-field" rows="3" style="margin-bottom: 8px;"></textarea>
-        <button class="btn btn-primary" onclick="publishNewsDirect()" style="width:100%;">🚀 သတင်းလွှင့်မည်</button>
-    </div>
-
-    <!-- 📰 တင်ထားသော သတင်းများ ပေါ်မည့်နေရာ -->
-    <div id="newsContainer">
-        <p style="text-align:center; color:#aaa;">သတင်းများကို လုဒ်ဆွဲနေပါသည်...</p>
-    </div>
-</div>
+        <!-- TAB 2: NEWS (Google Sheets Integration) -->
+        <div id="news" class="tab-content">
+            <div id="newsContainer">
+                <p style="text-align:center; color:#aaa;">သတင်းများကို လုဒ်ဆွဲနေပါသည်...</p>
+            </div>
+        </div>
     </div>
 
     <!-- 💬 CHAT POP-UP MODAL PAGE -->
@@ -437,7 +422,7 @@
         function openChatModal() { document.getElementById('chatModal').classList.add('active'); }
         function closeChatModal() { document.getElementById('chatModal').classList.remove('active'); }
 
-        // 🔑 FIREBASE CONFIGURATION
+        // 🔑 FIREBASE CONFIGURATION (For Chat & Auth Only)
         const firebaseConfig = {
             apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
             authDomain: "cycling-4545f.firebaseapp.com",
@@ -560,85 +545,81 @@
                 alert("Error: " + err.message);
             });
         }
-        // 📡 FETCH NEWS FROM DATABASE
-db.ref('bicycle_news').on('value', snapshot => {
-    const container = document.getElementById('newsContainer');
-    container.innerHTML = '';
-    const data = snapshot.val();
-    
-    if (data) {
-        Object.values(data).reverse().forEach(news => {
-            container.innerHTML += `
-                <div class="card" style="margin-bottom: 15px;">
-                    <h3>${news.title}</h3>
-                    <span class="tag">${news.tag}</span>
-                    <p class="info-p">${news.content}</p>
-                </div>
-            `;
+
+        // 📊 FETCH NEWS FROM GOOGLE SHEETS
+        const sheetCSVUrl = "Https://docs.google.com/spreadsheets/d/1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8/edit?usp=drivesdk";
+
+        function fetchNewsFromGoogleSheet() {
+            const container = document.getElementById('newsContainer');
+            
+            fetch(sheetCSVUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.text();
+                })
+                .then(csvText => {
+                    const rows = parseCSV(csvText);
+                    container.innerHTML = '';
+
+                    // CSV ရဲ့ ပထမဆုံးတန်း (Title, Tag, Content) ကို ပစ်ပြီး အောက်က အချက်အလက်များကို ဆွဲယူမည်
+                    if (rows.length > 1) {
+                        // နောက်ဆုံး တင်ထားသော သတင်းများကို အပေါ်မှာ ပေါ်စေရန် reverse() သုံးထားပါသည်
+                        const newsRows = rows.slice(1).reverse();
+                        
+                        newsRows.forEach(row => {
+                            if (row.length >= 3) {
+                                const title = row[0] || 'ခေါင်းစဉ်မရှိပါ';
+                                const tag = row[1] || 'Bicycle News';
+                                const content = row[2] || '';
+
+                                container.innerHTML += `
+                                    <div class="card" style="margin-bottom: 15px;">
+                                        <h3>${title}</h3>
+                                        <span class="tag">${tag}</span>
+                                        <p class="info-p" style="margin-top:8px;">${content}</p>
+                                    </div>
+                                `;
+                            }
+                        });
+                    } else {
+                        container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ မရှိသေးပါ။</p>';
+                    }
+                })
+                .catch(err => {
+                    console.error("Error loading news:", err);
+                    container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ လုဒ်ဆွဲရာတွင် အမှားအယွင်းရှိနေပါသည်။</p>';
+                });
+        }
+
+        // CSV parsing function to handle commas and line breaks in quoted fields properly
+        function parseCSV(text) {
+            let p = '', c = '', r = [];
+            let q = false;
+            let row = [''];
+            for (let i = 0; i < text.length; i++) {
+                c = text[i];
+                p = text[i - 1];
+                if (c === '"') {
+                    if (q && text[i + 1] === '"') { row[row.length - 1] += '"'; i++; }
+                    else { q = !q; }
+                } else if (c === ',' && !q) {
+                    row.push('');
+                } else if ((c === '\r' || c === '\n') && !q) {
+                    if (c === '\r' && text[i + 1] === '\n') { i++; }
+                    r.push(row);
+                    row = [''];
+                } else {
+                    row[row.length - 1] += c;
+                }
+            }
+            if (row.length > 1 || row[0] !== '') { r.push(row); }
+            return r;
+        }
+
+        // Website စပွင့်သည်နှင့် Google Sheet မှ သတင်းများကို ဆွဲယူပါမည်
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchNewsFromGoogleSheet();
         });
-    } else {
-        container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ မရှိသေးပါ။</p>';
-    }
-});
-        // 🔑 Admin Form ဖွင့်/ပိတ် လုပ်ပေးသည့် Function
-function toggleAdminPanel() {
-    const box = document.getElementById('adminFormBox');
-    if (box.style.display === 'none' || box.style.display === '') {
-        box.style.display = 'block';
-    } else {
-        box.style.display = 'none';
-    }
-}
-
-// ✍️ Password စစ်ပြီး သတင်း တိုက်ရိုက်တင်သည့် Function
-function publishNewsDirect() {
-    const pass = document.getElementById('adminPass').value;
-    const title = document.getElementById('newsTitle').value;
-    const content = document.getElementById('newsContent').value;
-
-    // 💡 လက်ရှိ သတ်မှတ်ထားသော Password : 1234 (ကြိုက်နှစ်သက်ရာ ပြောင်းနိုင်ပါတယ်)
-    if (pass !== "1234") {
-        return alert("❌ Password မှားယွင်းနေပါသည်!");
-    }
-
-    if (!title || !content) {
-        return alert("⚠️ ခေါင်းစဉ်နှင့် အကြောင်းအရာ ဖြည့်စွက်ပေးပါ။");
-    }
-
-    // Firebase Database သို့ သတင်းလှမ်းပို့ခြင်း
-    db.ref('bicycle_news').push({
-        title: title,
-        tag: 'Bicycle News',
-        content: content,
-        timestamp: Date.now()
-    }).then(() => {
-        alert("✅ သတင်းတင်ပြီးပါပြီ!");
-        document.getElementById('adminPass').value = '';
-        document.getElementById('newsTitle').value = '';
-        document.getElementById('newsContent').value = '';
-        toggleAdminPanel(); // တင်ပြီးရင် အကွက်ပြန်ပိတ်မည်
-    }).catch(err => alert("Error: " + err.message));
-}
-
-// 📡 Firebase မှ သတင်းများကို လှမ်းဆွဲပြခြင်း
-db.ref('bicycle_news').on('value', snapshot => {
-    const container = document.getElementById('newsContainer');
-    container.innerHTML = '';
-    const data = snapshot.val();
-    
-    if (data) {
-        Object.values(data).reverse().forEach(news => {
-            container.innerHTML += `
-                <div class="card" style="margin-bottom: 15px;">
-                    <h3 style="color:#00f2fe;">${news.title}</h3>
-                    <p class="info-p" style="margin-top:8px;">${news.content}</p>
-                </div>
-            `;
-        });
-    } else {
-        container.innerHTML = '<p style="text-align:center; color:#aaa;">သတင်းများ မရှိသေးပါ။</p>';
-    }
-});
     </script>
 </body>
 </html>
