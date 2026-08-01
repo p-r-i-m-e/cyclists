@@ -380,15 +380,15 @@
         }
 
         // 🔑 FIREBASE CONFIGURATION
-        const firebaseConfig = {
-            apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
-            authDomain: "cycling-4545f.firebaseapp.com",
-            databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com",
-            projectId: "cycling-4545f",
-            storageBucket: "cycling-4545f.firebasestorage.app",
-            messagingSenderId: "1053672969724",
-            appId: "1:1053672969724:web:6eb60a9f30fde781398e79"
-        };
+       const firebaseConfig = {
+    apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
+    authDomain: "cycling-4545f.firebaseapp.com",
+    databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com", // <-- ဒီနေရာ တိကျရပါမယ်
+    projectId: "cycling-4545f",
+    storageBucket: "cycling-4545f.firebasestorage.app",
+    messagingSenderId: "1053672969724",
+    appId: "1:1053672969724:web:6eb60a9f30fde781398e79"
+};
         firebase.initializeApp(firebaseConfig);
 
         const auth = firebase.auth();
@@ -473,27 +473,24 @@
             if (e.key === 'Enter') sendRealtimeComment();
         }
 
-        // 🚀 SEND REALTIME COMMENT
-        function sendRealtimeComment() {
-            if (!auth.currentUser) {
-                alert('စာမပို့မီ အကောင့်အရင်ဝင်ပေးပါ!');
-                openProfileModal();
-                return;
-            }
+     // 🚀 SEND REALTIME COMMENT (GUEST & AUTH BOTH ALLOWED)
+function sendRealtimeComment() {
+    const text = document.getElementById('chatInput').value;
+    if (!text.trim()) return;
 
-            const text = document.getElementById('chatInput').value;
-            if (!text.trim()) return;
+    // အကောင့်ဝင်ထားရင် အကောင့်နာမည်သုံးမည်၊ မဝင်ထားရင် Guest အဖြစ်ပို့မည်
+    const senderName = currentUserDisplayName || "Guest Rider";
 
-            db.ref('global_comments').push({
-                userName: currentUserDisplayName,
-                text: text,
-                timestamp: Date.now()
-            }).then(() => {
-                document.getElementById('chatInput').value = '';
-            }).catch(err => {
-                alert("စာပို့ရာတွင် အမှားဖြစ်ပေါ်ပါသည်: " + err.message);
-            });
-        }
+    db.ref('global_comments').push({
+        userName: senderName,
+        text: text,
+        timestamp: Date.now()
+    }).then(() => {
+        document.getElementById('chatInput').value = '';
+    }).catch(err => {
+        alert("Firebase Error: " + err.message);
+    });
+}
     </script>
 </body>
 </html>
