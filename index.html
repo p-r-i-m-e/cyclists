@@ -65,15 +65,22 @@
             text-decoration: underline;
         }
 
-        /* 👤 Profile Button */
-        .profile-icon-btn {
+        /* 👤 Header Right Action Buttons (Account & Chat) */
+        .header-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .profile-icon-btn, .chat-icon-btn {
             background: rgba(0, 242, 254, 0.15);
             border: 1px solid #00f2fe;
             color: #00f2fe;
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -83,7 +90,12 @@
             white-space: nowrap;
         }
 
-        .profile-icon-btn:hover {
+        .chat-icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 242, 254, 0.6);
+        }
+
+        .profile-icon-btn:hover, .chat-icon-btn:hover {
             background: #00f2fe;
             color: #000;
         }
@@ -163,96 +175,12 @@
         .call-btn { background: #28a745; color: #ffffff; }
         .map-btn { background: #17a2b8; color: #ffffff; }
 
-        /* 💬 TELEGRAM STYLE CHAT UI */
-        .chat-card {
-            display: flex;
-            flex-direction: column;
-            height: 60vh;
-            padding: 15px;
-        }
-
-        .chat-header {
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 5px;
-            margin-bottom: 10px;
-        }
-
-        .comment-item { 
-            background: rgba(255, 255, 255, 0.08); 
-            padding: 10px 14px; 
-            border-radius: 14px; 
-            border-left: 4px solid #00f2fe; 
-            max-width: 85%;
-            align-self: flex-start;
-        }
-
-        .comment-item.my-message {
-            align-self: flex-end;
-            border-left: none;
-            border-right: 4px solid #00f2fe;
-            background: rgba(0, 242, 254, 0.2);
-        }
-
-        .comment-user { font-weight: bold; color: #00f2fe; font-size: 0.8rem; margin-bottom: 2px; }
-        .comment-text { color: #ffffff; font-size: 0.9rem; word-break: break-word; }
-
-        .chat-input-area {
-            display: flex;
-            gap: 8px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 8px;
-            border-radius: 25px;
-            border: 1px solid #00f2fe;
-        }
-
-        .input-field { 
-            width: 100%; 
-            padding: 10px 15px; 
-            border-radius: 20px; 
-            border: none; 
-            background: transparent; 
-            color: #ffffff !important; 
-            font-size: 0.9rem !important;
-            outline: none; 
-        }
-        
-        .input-field::placeholder { color: #a0aec0 !important; }
-
-        .btn { padding: 8px 16px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-primary { background: #00f2fe; color: #000; }
-        .btn-danger { background: #ff4757; color: #fff; }
-
-        /* 🔒 LOCKED CHAT OVERLAY */
-        .chat-login-prompt {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            gap: 12px;
-            color: #a0aec0;
-        }
-
-        /* 📱 PROFILE MODAL (POP-UP PAGE) */
+        /* 📱 POP-UP MODALS (ACCOUNT & CHAT) */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(8px);
             z-index: 999;
             justify-content: center;
@@ -265,8 +193,8 @@
             background: #1a2a3a;
             border: 1px solid #00f2fe;
             width: 90%;
-            max-width: 400px;
-            padding: 25px;
+            max-width: 450px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
@@ -281,6 +209,68 @@
             font-size: 1.2rem;
             cursor: pointer;
         }
+
+        /* 💬 CHAT MODAL UI */
+        .chat-modal-body {
+            display: flex;
+            flex-direction: column;
+            height: 60vh;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 5px;
+            margin: 15px 0;
+        }
+
+        .comment-item { 
+            background: rgba(255, 255, 255, 0.08); 
+            padding: 8px 12px; 
+            border-radius: 12px; 
+            border-left: 3px solid #00f2fe; 
+            max-width: 85%;
+            align-self: flex-start;
+        }
+
+        .comment-item.my-message {
+            align-self: flex-end;
+            border-left: none;
+            border-right: 3px solid #00f2fe;
+            background: rgba(0, 242, 254, 0.2);
+        }
+
+        .comment-user { font-weight: bold; color: #00f2fe; font-size: 0.8rem; margin-bottom: 2px; }
+        .comment-text { color: #ffffff; font-size: 0.9rem; word-break: break-word; }
+
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 10px;
+            border-radius: 25px;
+            border: 1px solid #00f2fe;
+        }
+
+        .input-field { 
+            width: 100%; 
+            padding: 8px 12px; 
+            border-radius: 20px; 
+            border: none; 
+            background: transparent; 
+            color: #ffffff !important; 
+            font-size: 0.9rem !important;
+            outline: none; 
+        }
+        
+        .input-field::placeholder { color: #a0aec0 !important; }
+
+        .btn { padding: 8px 16px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: #00f2fe; color: #000; }
+        .btn-danger { background: #ff4757; color: #fff; }
 
         footer { text-align: center; color: #90a4ae; font-size: 0.8rem; margin-top: auto; }
     </style>
@@ -301,17 +291,21 @@
             </div>
         </div>
         
-        <!-- 👤 ACCOUNT BUTTON IN HEADER -->
-        <button class="profile-icon-btn" onclick="openProfileModal()">
-            👤 <span id="headerProfileName">Account</span>
-        </button>
+        <!-- 👤 ACCOUNT & CHAT BUTTONS AT TOP RIGHT -->
+        <div class="header-actions">
+            <button class="profile-icon-btn" onclick="openProfileModal()">
+                👤 <span id="headerProfileName">Account</span>
+            </button>
+            <button class="chat-icon-btn" onclick="openChatModal()">
+                💬 <span>Chat Group</span>
+            </button>
+        </div>
     </header>
 
     <!-- NAVIGATION TABS -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('shops', event)">🏪 စက်ဘီးပြင်/အရောင်းဆိုင်များ</button>
         <button class="tab-btn" onclick="switchTab('news', event)">📰 Bicycle News</button>
-        <button class="tab-btn" onclick="switchTab('chat', event)">💬 All Chat</button>
     </div>
 
     <div class="container">
@@ -350,32 +344,27 @@
             </div>
         </div>
 
-        <!-- TAB 3: ALL CHAT (LOCKED FOR GUESTS) -->
-        <div id="chat" class="tab-content">
-            <div class="card chat-card">
-                <div class="chat-header">
-                    <h3>💬 Cycling Community Group</h3>
-                    <span style="font-size:0.8rem; color:#00f2fe;">● Live Chat</span>
-                </div>
+    </div>
 
-                <!-- CHAT CONTAINER WHEN LOGGED IN -->
-                <div id="chatActiveContainer" style="display: flex; flex-direction: column; height: 100%;">
-                    <div class="chat-messages" id="commentsList"></div>
-
-                    <div class="chat-input-area">
-                        <input type="text" id="chatInput" class="input-field" placeholder="Message ရေးပါ..." onkeypress="handleKeyPress(event)">
-                        <button class="btn btn-primary" onclick="sendRealtimeComment()">Send 🚀</button>
-                    </div>
-                </div>
-
-                <!-- PROMPT WHEN NOT LOGGED IN -->
-                <div id="chatLockedContainer" class="chat-login-prompt" style="display: none;">
-                    <p>🔒 All Chat ကို အသုံးပြုရန် အကောင့်ဝင်ရန် လိုအပ်ပါသည်။</p>
-                    <button class="btn btn-primary" onclick="openProfileModal()">🔑 Login / Sign Up ပြုလုပ်မည်</button>
+    <!-- 💬 CHAT POP-UP MODAL PAGE -->
+    <div class="modal-overlay" id="chatModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeChatModal()">✕</button>
+            <h3 style="color:#00f2fe; margin-bottom: 5px;">💬 Cycling Community Group</h3>
+            
+            <div id="chatActiveContainer" class="chat-modal-body">
+                <div class="chat-messages" id="commentsList"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" class="input-field" placeholder="Message ရေးပါ..." onkeypress="handleKeyPress(event)">
+                    <button class="btn btn-primary" onclick="sendRealtimeComment()">Send 🚀</button>
                 </div>
             </div>
-        </div>
 
+            <div id="chatLockedContainer" style="display: none; text-align: center; padding: 30px 10px;">
+                <p style="color:#a0aec0; margin-bottom: 15px;">🔒 Chat အသုံးပြုရန် အကောင့်ဝင်ရန် လိုအပ်ပါသည်။</p>
+                <button class="btn btn-primary" onclick="closeChatModal(); openProfileModal();">🔑 Login / Sign Up ပြုလုပ်မည်</button>
+            </div>
+        </div>
     </div>
 
     <!-- 👤 ACCOUNT PROFILE POP-UP MODAL PAGE -->
@@ -425,19 +414,16 @@
             if (evt && evt.currentTarget) {
                 evt.currentTarget.classList.add('active');
             } else {
-                // If clicked from Home sub-link
                 const btns = document.querySelectorAll('.tab-btn');
                 if(tabId === 'shops') btns[0].classList.add('active');
             }
         }
 
-        function openProfileModal() {
-            document.getElementById('profileModal').classList.add('active');
-        }
-
-        function closeProfileModal() {
-            document.getElementById('profileModal').classList.remove('active');
-        }
+        function openProfileModal() { document.getElementById('profileModal').classList.add('active'); }
+        function closeProfileModal() { document.getElementById('profileModal').classList.remove('active'); }
+        
+        function openChatModal() { document.getElementById('chatModal').classList.add('active'); }
+        function closeChatModal() { document.getElementById('chatModal').classList.remove('active'); }
 
         // 🔑 FIREBASE CONFIGURATION
         const firebaseConfig = {
@@ -475,7 +461,7 @@
 
                 // Lock Chat UI
                 document.getElementById('chatActiveContainer').style.display = 'none';
-                document.getElementById('chatLockedContainer').style.display = 'flex';
+                document.getElementById('chatLockedContainer').style.display = 'block';
             }
         });
 
