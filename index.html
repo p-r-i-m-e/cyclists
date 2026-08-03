@@ -102,9 +102,15 @@
                 <!-- Chat Message ထွက်မည့်နေရာ -->
                 <div class="chat-box" id="chatBox"></div>
 
-                <div class="chat-input-group">
-                    <input type="text" id="chatMsg" placeholder="စာရိုက်ပါ..." class="input-field" style="margin:0;" onkeypress="if(event.key==='Enter') sendChatMessage()">
-                    <button class="btn-action" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                <div class="chat-input-group" style="flex-direction: column; gap: 8px;">
+                    <!-- နာမည်ရိုက်ထည့်ရန် Input Box -->
+                    <input type="text" id="chatUsername" placeholder="သင့်နာမည် ရိုက်ထည့်ပါ (ဥပမာ - Mg Mg)" class="input-field" style="margin:0;">
+                    
+                    <div style="display: flex; gap: 8px;">
+                        <!-- စာရိုက်ရန် Input Box -->
+                        <input type="text" id="chatMsg" placeholder="စာရိုက်ပါ..." class="input-field" style="margin:0; flex: 1;" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                        <button class="btn-action" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,20 +166,23 @@
 
     // 4. Live Chat Functions
     async function sendChatMessage() {
+        const userInput = document.getElementById('chatUsername');
         const msgInput = document.getElementById('chatMsg');
+        
+        const username = userInput.value.trim() || "Cyclist Guest"; // နာမည်မရိုက်ထားရင် Guest လို့ပြမည်
         const msg = msgInput.value.trim();
 
         if (!msg) return;
 
         const { error } = await supabaseClient
             .from('messages')
-            .insert([{ username: "Cyclist Guest", text: msg }]);
+            .insert([{ username: username, text: msg }]);
 
         if (error) {
             console.error("Error sending message:", error);
             alert("စာပို့ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
         } else {
-            msgInput.value = '';
+            msgInput.value = ''; // စာပို့ပြီးရင် Message ကွက်ကို ပျောက်ပေးမည် (နာမည်ကတော့ ကျန်ခဲ့မည်)
         }
     }
 
