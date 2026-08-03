@@ -272,9 +272,9 @@
         });
     }
 
-    // 📰 Google Sheet News Fetching
-    const sheetID = "1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8";
-    const newsSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+   // 📰 Google Sheet (News) Fetching - URL သစ်ဖြင့် ပြင်ဆင်ထားသည်
+    const newsSheetID = "1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E";
+    const newsSheetURL = `https://docs.google.com/spreadsheets/d/${newsSheetID}/gviz/tq?tqx=out:json`;
 
     function fetchNewsFromSheet() {
         fetch(newsSheetURL)
@@ -308,14 +308,15 @@
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById('newsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ ဆွဲယူ၍ မရသေးပါ။</p>';
+                document.getElementById('newsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet တွင် Access Permission (Anyone with link) ပေးထားခြင်း ရှိမရှိ စစ်ဆေးပါ။</p>';
             });
     }
 
     fetchNewsFromSheet();
 
-    // 📊 Google Sheet မှ Shops စာရင်း ဆွဲယူခြင်း
-    const shopSheetURL = `https://docs.google.com/spreadsheets/d/1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E/edit?usp=drivesdk`;
+    // 📊 Google Sheet (Shops) Fetching
+    const shopSheetID = "1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8";
+    const shopSheetURL = `https://docs.google.com/spreadsheets/d/${shopSheetID}/gviz/tq?tqx=out:json&sheet=Shops`;
 
     function fetchShopsFromSheet() {
         fetch(shopSheetURL)
@@ -351,7 +352,7 @@
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById('shopsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">ဆိုင်စာရင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet ထဲတွင် Shops Tab ထည့်ထားခြင်း ရှိမရှိ စစ်ဆေးပါ။</p>';
+                document.getElementById('shopsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">ဆိုင်စာရင်းများ ဆွဲယူ၍ မရသေးပါ။</p>';
             });
     }
 
