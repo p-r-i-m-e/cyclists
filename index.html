@@ -166,30 +166,48 @@
 
     // 4. Live Chat Functions
     async function sendChatMessage() {
-        const userInput = document.getElementById('chatUsername');
-        const msgInput = document.getElementById('chatMsg');
-        
-        let username = userInput.value.trim() || "Cyclist Guest";
-        const msg = msgInput.value.trim();
+    const userInput = document.getElementById('chatUsername');
+    const msgInput = document.getElementById('chatMsg');
+    
+    let username = userInput.value.trim() || "Cyclist Guest";
+    const msg = msgInput.value.trim();
 
-        if (!msg) return;
+    if (!msg) return;
 
-        // 🔒 တားမြစ်ချင်သော နာမည်များ စာရင်း
-        const forbiddenNames = ['admin', 'administrator', 'owner', 'moderator', 'system', 'sysadmin'];
+    // 🔒 တားမြစ်ထားသော စကားလုံးများ
+    const forbiddenKeywords = ['admin', 'owner', 'moderator', 'system', 'sysadmin', 'mch'];
 
-        // စစ်ဆေးခြင်း
-        if (forbiddenNames.includes(username.toLowerCase())) {
-            const ADMIN_SECRET = "Naylin12##"; // 🔑 Admin Password
+    // ရိုက်လိုက်တဲ့ နာမည်ထဲမှာ တားမြစ်စကားလုံး တစ်ခုခု ပါနေသလား စစ်ဆေးခြင်း (တွဲရေးရင်လည်း မိမည်)
+    const isForbidden = forbiddenKeywords.some(keyword => 
+        username.toLowerCase().includes(keyword)
+    );
 
-            const enteredPass = prompt(" Authorized Name ဖြစ်ပါသဖြင့် Password ရိုက်ထည့်ပါ:");
+    if (isForbidden) {
+        const ADMIN_SECRET = "123456"; // 🔑 မိမိ Password ထည့်ပါ
 
-            if (enteredPass !== ADMIN_SECRET) {
-                alert("❌ Password မမှန်ကန်ပါ။ ဤနာမည်ကို သုံးခွင့်မရှိပါ။");
-                return; // စာပို့ခွင့်မပြုဘဲ ရပ်လိုက်မည်
-            }
-            
-            username = "Admin 👑"; // Password မှန်ရင် ပြသမည့် နာမည်
+        const enteredPass = prompt("Admin / Restricted Keyword ပါဝင်နေပါသဖြင့် Password ရိုက်ထည့်ပါ:");
+
+        if (enteredPass !== ADMIN_SECRET) {
+            alert("❌ Password မမှန်ကန်ပါ။ Admin သို့မဟုတ် တားမြစ်စကားလုံးများ ပါဝင်သော နာမည်ကို သုံးခွင့်မရှိပါ။");
+            return; // စာပို့ခွင့်မပြုပါ
         }
+        
+        // Password မှန်ပါက ရိုက်ထားသည့် နာမည်အတိုင်း (သို့မဟုတ်) Admin 👑 အဖြစ် ပို့မည်
+        // username = "Admin 👑"; // နာမည်ကို Admin 👑 လို့ပဲ ပုံသေပြချင်ရင် ဒီလိုင်းကို Un-comment လုပ်ပါ
+    }
+
+    // Database သို့ စာပို့ခြင်း
+    const { error } = await supabaseClient
+        .from('messages')
+        .insert([{ username: username, text: msg }]);
+
+    if (error) {
+        console.error("Error sending message:", error);
+        alert("စာပို့ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+    } else {
+        msgInput.value = ''; 
+    }
+}
 
         // Database သို့ စာပို့ခြင်း
         const { error } = await supabaseClient
