@@ -166,25 +166,56 @@
 
     // 4. Live Chat Functions
     async function sendChatMessage() {
-        const userInput = document.getElementById('chatUsername');
-        const msgInput = document.getElementById('chatMsg');
-        
-        const username = userInput.value.trim() || "Cyclist Guest"; // နာမည်မရိုက်ထားရင် Guest လို့ပြမည်
-        const msg = msgInput.value.trim();
+    const userInput = document.getElementById('chatUsername');
+    const msgInput = document.getElementById('chatMsg');
+    
+    let username = userInput.value.trim() || "Cyclist Guest";
+    const msg = msgInput.value.trim();
 
-        if (!msg) return;
+    if (!msg) return;
 
-        const { error } = await supabaseClient
-            .from('messages')
-            .insert([{ username: username, text: msg }]);
+    // 🔒 တားမြစ်ချင်သော နာမည်များ စာရင်း (အသေး/အကြီး ခွဲစရာမလိုပါ)
+    const forbiddenNames = ['admin', 'administrator', 'owner', 'moderator', 'system', 'sysadmin'];
 
-        if (error) {
-            console.error("Error sending message:", error);
-            alert("စာပို့ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
-        } else {
-            msgInput.value = ''; // စာပို့ပြီးရင် Message ကွက်ကို ပျောက်ပေးမည် (နာမည်ကတော့ ကျန်ခဲ့မည်)
+    // စစ်ဆေးခြင်း
+    if (forbiddenNames.includes(username.toLowerCase())) {
+        const ADMIN_SECRET = "Naylin12##"; // 🔑 မိမိထားချင်သော Admin Password ပြောင်းပါ
+
+        const enteredPass = prompt(" Authorized Name ဖြစ်ပါသဖြင့် Password ရိုက်ထည့်ပါ:");
+
+        if (enteredPass !== ADMIN_SECRET) {
+            alert("❌ Password မမှန်ကန်ပါ။ ဤနာမည်ကို သုံးခွင့်မရှိပါ။");
+            return; // စာပို့ခွင့်မပြုဘဲ ရပ်လိုက်မည်
         }
+        
+        username = "Admin 👑"; // Password မှန်ရင် ပြသမည့် နာမည်
     }
+
+    // Database သို့ စာပို့ခြင်း
+    const { error } = await supabaseClient
+        .from('messages')
+        .insert([{ username: username, text: msg }]);
+
+    if (error) {
+        console.error("Error sending message:", error);
+        alert("စာပို့ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+    } else {
+        msgInput.value = ''; // စာပို့ပြီးလျှင် Input ကွက်ကို ရှင်းပေးမည်
+    }
+}
+
+    // Database သို့ စာပို့ခြင်း
+    const { error } = await supabaseClient
+        .from('messages')
+        .insert([{ username: username, text: msg }]);
+
+    if (error) {
+        console.error("Error sending message:", error);
+        alert("စာပို့ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+    } else {
+        msgInput.value = ''; 
+    }
+}
 
     function loadChatMessages() {
         // စာဟောင်းများ ဖတ်ယူခြင်း
