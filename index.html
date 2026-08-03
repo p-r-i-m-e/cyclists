@@ -272,9 +272,10 @@
         });
     }
 
-   // 📰 Google Sheet (News) Fetching - URL သစ်ဖြင့် ပြင်ဆင်ထားသည်
-    const newsSheetID = "1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E";
-    const newsSheetURL = `https://docs.google.com/spreadsheets/d/${newsSheetID}/gviz/tq?tqx=out:json`;
+   const sheetID = "1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E";
+
+    // 📰 1. News ဖတ်ရန် Function (သတင်းများသာ မင်္ဂလာပါ)
+    const newsSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
     function fetchNewsFromSheet() {
         fetch(newsSheetURL)
@@ -308,15 +309,13 @@
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById('newsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet တွင် Access Permission (Anyone with link) ပေးထားခြင်း ရှိမရှိ စစ်ဆေးပါ။</p>';
+                document.getElementById('newsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ ဆွဲယူ၍ မရသေးပါ။</p>';
             });
     }
 
-    fetchNewsFromSheet();
-
-    // 📊 Google Sheet (Shops) Fetching
-    const shopSheetID = "1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8";
-    const shopSheetURL = `https://docs.google.com/spreadsheets/d/${shopSheetID}/gviz/tq?tqx=out:json&sheet=Shops`;
+    // 📊 2. Shops ဖတ်ရန် Function (ဆိုင်စာရင်းများသာ)
+    // မိမိ ဆိုင်စာရင်း ထည့်ထားသော Sheet Tab Name (ဥပမာ- Shops) ကို အောက်မှာ မှန်အောင် ရေးပေးပါ
+    const shopSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=Shops`;
 
     function fetchShopsFromSheet() {
         fetch(shopSheetURL)
@@ -356,6 +355,8 @@
             });
     }
 
+    // တိုင်ပင်ထားသည့်အတိုင်း ပြိုင်တူ ခေါ်ယူမည်
+    fetchNewsFromSheet();
     fetchShopsFromSheet();
 </script>
 </body>
