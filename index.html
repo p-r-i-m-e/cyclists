@@ -272,10 +272,10 @@
         });
     }
 
-   const sheetID = "1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E";
+  const sheetID = "1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E";
 
-    // 📰 1. News ဖတ်ရန် Function (သတင်းများသာ မင်္ဂလာပါ)
-    const newsSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
+    // 📰 1. News Tab မှ သတင်းများ ဆွဲယူခြင်း
+    const newsSheetURL = `https://docs.google.com/spreadsheets/d/1CKNSkpnLOULD1acHvpoVVoV8k--L2gkXj6M1U_9wSM8/edit?usp=drivesdk`;
 
     function fetchNewsFromSheet() {
         fetch(newsSheetURL)
@@ -309,13 +309,12 @@
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById('newsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ ဆွဲယူ၍ မရသေးပါ။</p>';
+                document.getElementById('newsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">သတင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet တွင် "News" ဟူသော Tab နာမည် ရှိမရှိ စစ်ပါ၊၊</p>';
             });
     }
 
-    // 📊 2. Shops ဖတ်ရန် Function (ဆိုင်စာရင်းများသာ)
-    // မိမိ ဆိုင်စာရင်း ထည့်ထားသော Sheet Tab Name (ဥပမာ- Shops) ကို အောက်မှာ မှန်အောင် ရေးပေးပါ
-    const shopSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=Shops`;
+    // 📊 2. Shops Tab မှ ဆိုင်စာရင်းများ ဆွဲယူခြင်း
+    const shopSheetURL = `https://docs.google.com/spreadsheets/d/1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E/edit?usp=drivesdk`;
 
     function fetchShopsFromSheet() {
         fetch(shopSheetURL)
@@ -351,11 +350,10 @@
             })
             .catch(err => {
                 console.error(err);
-                document.getElementById('shopsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">ဆိုင်စာရင်းများ ဆွဲယူ၍ မရသေးပါ။</p>';
+                document.getElementById('shopsContainer').innerHTML = '<p style="text-align:center; color:#cfd8dc;">ဆိုင်စာရင်းများ ဆွဲယူ၍ မရသေးပါ။ Google Sheet တွင် "Shops" ဟူသော Tab နာမည် ရှိမရှိ စစ်ပါ။</p>';
             });
     }
 
-    // တိုင်ပင်ထားသည့်အတိုင်း ပြိုင်တူ ခေါ်ယူမည်
     fetchNewsFromSheet();
     fetchShopsFromSheet();
 </script>
