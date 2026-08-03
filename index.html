@@ -7,10 +7,8 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif; }
@@ -40,7 +38,7 @@
         .search-input { width: 100%; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(0, 242, 254, 0.4); padding: 12px 15px 12px 42px; border-radius: 12px; color: #fff; outline: none; font-size: 0.95rem; transition: 0.3s; }
         .search-input:focus { border-color: #00f2fe; box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
 
-        /* Chat & Auth UI */
+        /* Chat & UI */
         .chat-box { height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px; margin-bottom: 15px; }
         .chat-message { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 14px; border-radius: 12px; max-width: 80%; }
         .chat-message.my-msg { align-self: flex-end; background: rgba(0, 242, 254, 0.15); border-color: rgba(0, 242, 254, 0.3); }
@@ -52,8 +50,6 @@
         .input-field:focus { border-color: #00f2fe; }
         .btn-action { background: linear-gradient(45deg, #00f2fe, #4facfe); border: none; color: #0f2027; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         
-        .auth-container { max-width: 400px; margin: 0 auto; text-align: center; }
-        .auth-toggle { color: #00f2fe; cursor: pointer; text-decoration: underline; font-size: 0.85rem; }
         footer { text-align: center; color: #90a4ae; font-size: 0.8rem; margin-top: auto; padding: 10px 0; }
     </style>
 </head>
@@ -80,66 +76,59 @@
     <main>
         <!-- 🛠️ TAB 1: SHOPS -->
         <div id="shops" class="tab-content active">
-            
-            <!-- 🔍 Search Bar -->
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" id="shopSearchInput" onkeyup="searchShops()" placeholder="မြို့နယ် သို့မဟုတ် လမ်းအမည် ရိုက်ရှာပါ..." class="search-input">
             </div>
-
-            <!-- 🚲 Shop List Container (Google Sheet မှ အလိုအလျောက် ဝင်လာမည်) -->
             <div id="shopsContainer">
                 <p style="text-align:center; color:#cfd8dc;">စက်ဘီးဆိုင်များ စာရင်းကို လုဒ်ဆွဲနေပါသည်...</p>
             </div>
         </div>
 
-        <!-- 📰 TAB 2: NEWS (Google Sheet) -->
+        <!-- 📰 TAB 2: NEWS -->
         <div id="news" class="tab-content">
             <div id="newsContainer">
                 <p style="text-align:center; color:#cfd8dc;"> သတင်းများကို ဒေါင်းလုဒ်ဆွဲနေပါသည်...</p>
             </div>
         </div>
 
-        <!-- 💬 TAB 3: FIREBASE LIVE CHAT -->
+        <!-- 💬 TAB 3: SUPABASE LIVE CHAT -->
         <div id="chat" class="tab-content">
-            
-            <!-- 🔒 Auth Section -->
-            <div id="authSection" class="card auth-container">
-                <h3 class="card-title" id="authTitle"><i class="fa-solid fa-user-lock"></i> အကောင့်ဝင်ပါ </h3>
-                <p class="info-p" style="margin-bottom: 15px;">Live Chat တွင် ပါဝင်ဆွေးနွေးရန် အကောင့်ဝင်ရန် လိုအပ်ပါသည်။ (Password မမေ့ရ) </p>
-
-                <input type="text" id="authName" placeholder="သင့်အမည် (Username)" class="input-field" style="display:none;">
-                <input type="email" id="authEmail" placeholder="အီးမေးလ် (Email)" class="input-field">
-                <input type="password" id="authPass" placeholder="စကားဝှက် (Password)" class="input-field">
-
-                <button class="btn-action" style="width: 100%; margin-bottom: 12px;" onclick="handleAuth()" id="authBtn"> အကောင့်ဝင်မည် </button>
-                <p class="info-p"><span id="toggleText">အကောင့်မရှိသေးပါက</span> <span class="auth-toggle" onclick="toggleAuthMode()">အကောင့်သစ်ဖွင့်ပါ</span></p>
-            </div>
-
-            <!-- 💬 Chat Section -->
-            <div id="chatSection" class="card" style="display: none;">
+            <div class="card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <h3 class="card-title" style="margin: 0;"><i class="fa-solid fa-comments"></i> Cyclists Chat Room (Don't rule) </h3>
-                    <button onclick="logout()" style="background: none; border: none; color: #ff5252; cursor: pointer; font-size: 0.8rem;"><i class="fa-solid fa-right-from-bracket"></i> ထွက်မည်</button>
+                    <h3 class="card-title" style="margin: 0;"><i class="fa-solid fa-comments"></i> Cyclists Live Chat </h3>
                 </div>
                 
+                <!-- Chat Message ထွက်မည့်နေရာ -->
                 <div class="chat-box" id="chatBox"></div>
 
                 <div class="chat-input-group">
-                    <input type="text" id="chatMsg" placeholder="စာရိုက်ပါ(ဇာတ်တိုက်မနိပ်ရ)..." class="input-field" style="margin:0;" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <input type="text" id="chatMsg" placeholder="စာရိုက်ပါ..." class="input-field" style="margin:0;" onkeypress="if(event.key==='Enter') sendChatMessage()">
                     <button class="btn-action" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
-
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2026 Myanmar Cycling Hub.စက်ဘီးဝါသနာရှင်များအဆင်ပြေစေရန်.</p>
+        <p>&copy; 2026 Myanmar Cycling Hub. စက်ဘီးဝါသနာရှင်များ အဆင်ပြေစေရန်။</p>
     </footer>
 
 <script>
-    // 🔍 Shops Search Filter Function
+    // 1. Supabase Initialization
+    const SUPABASE_URL = "https://tuqqypanefdmsubbditp.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_wY9hu3_JbCe3f_FJnwCvVA_7DnAIfjm";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // 2. Tab Switch Function
+    function switchTab(tabId, event) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // 3. Search Shops Filter
     function searchShops() {
         const filter = document.getElementById('shopSearchInput').value.toLowerCase();
         const shopCards = document.querySelectorAll('.shop-card');
@@ -169,115 +158,69 @@
         }
     }
 
-    // 🔄 Tab Switch
-    function switchTab(tabId, event) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-
-    // ⚙️ Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyBI5pou461aqp2PXD4OECI-0tEFys4rqKc",
-      authDomain: "cycling-4545f.firebaseapp.com",
-      databaseURL: "https://cycling-4545f-default-rtdb.firebaseio.com",
-      projectId: "cycling-4545f",
-      storageBucket: "cycling-4545f.firebasestorage.app",
-      messagingSenderId: "1053672969724",
-      appId: "1:1053672969724:web:6eb60a9f30fde781398e79",
-      measurementId: "G-0M5GZHKV3J"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.database();
-
-    let isSignUp = false;
-    let currentUser = null;
-
-    function toggleAuthMode() {
-        isSignUp = !isSignUp;
-        document.getElementById('authTitle').innerHTML = isSignUp ? '<i class="fa-solid fa-user-plus"></i> အကောင့်သစ်ဖွင့်ပါ' : '<i class="fa-solid fa-user-lock"></i> အကောင့်ဝင်ပါ';
-        document.getElementById('authName').style.display = isSignUp ? 'block' : 'none';
-        document.getElementById('authBtn').innerText = isSignUp ? 'အကောင့်သစ်ပြုလုပ်မည်' : 'အကောင့်ဝင်မည်';
-        document.getElementById('toggleText').innerText = isSignUp ? 'အကောင့်ရှိပြီးသားဖြစ်ပါက' : 'အကောင့်မရှိသေးပါက';
-    }
-
-    function handleAuth() {
-        const email = document.getElementById('authEmail').value;
-        const pass = document.getElementById('authPass').value;
-        const name = document.getElementById('authName').value;
-
-        if (!email || !pass) return alert("အီးမေးလ် နှင့် စကားဝှက် ဖြည့်ပါ");
-
-        if (isSignUp) {
-            if (!name) return alert("သင့်အမည် ဖြည့်ပါ");
-            auth.createUserWithEmailAndPassword(email, pass)
-                .then((res) => res.user.updateProfile({ displayName: name }))
-                .catch(err => alert("Error: " + err.message));
-        } else {
-            auth.signInWithEmailAndPassword(email, pass)
-                .catch(err => alert("Error: " + err.message));
-        }
-    }
-
-    function logout() { auth.signOut(); }
-
-    auth.onAuthStateChanged(user => {
-        currentUser = user;
-        if (user) {
-            document.getElementById('authSection').style.display = 'none';
-            document.getElementById('chatSection').style.display = 'block';
-            loadChatMessages();
-        } else {
-            document.getElementById('authSection').style.display = 'block';
-            document.getElementById('chatSection').style.display = 'none';
-        }
-    });
-
-    function sendChatMessage() {
+    // 4. Live Chat Functions
+    async function sendChatMessage() {
         const msgInput = document.getElementById('chatMsg');
         const msg = msgInput.value.trim();
-        if (!msg || !currentUser) return;
 
-        db.ref('global_chat').push({
-            sender: currentUser.displayName || currentUser.email.split('@')[0],
-            uid: currentUser.uid,
-            text: msg,
-            timestamp: Date.now()
-        });
+        if (!msg) return;
 
-        msgInput.value = '';
+        const { error } = await supabaseClient
+            .from('messages')
+            .insert([{ username: "Cyclist Guest", text: msg }]);
+
+        if (error) {
+            console.error("Error sending message:", error);
+            alert("စာပို့ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+        } else {
+            msgInput.value = '';
+        }
     }
 
     function loadChatMessages() {
-        db.ref('global_chat').limitToLast(50).on('value', snapshot => {
-            const chatBox = document.getElementById('chatBox');
-            chatBox.innerHTML = '';
-            const data = snapshot.val();
-            
-            if (data) {
-                Object.values(data).forEach(m => {
-                    const isMe = currentUser && m.uid === currentUser.uid;
-                    chatBox.innerHTML += `
-                        <div class="chat-message ${isMe ? 'my-msg' : ''}">
-                            <div class="chat-user">${m.sender}</div>
-                            <div class="chat-text">${m.text}</div>
-                        </div>
-                    `;
-                });
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-        });
+        // စာဟောင်းများ ဖတ်ယူခြင်း
+        supabaseClient
+            .from('messages')
+            .select('*')
+            .order('created_at', { ascending: true })
+            .limit(50)
+            .then(({ data, error }) => {
+                if (data) {
+                    const chatBox = document.getElementById('chatBox');
+                    chatBox.innerHTML = '';
+                    data.forEach(m => renderMessage(m));
+                }
+            });
+
+        // Realtime စာသစ်များ ဖတ်ယူခြင်း
+        supabaseClient
+            .channel('public:messages')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
+                renderMessage(payload.new);
+            })
+            .subscribe();
     }
 
-  const sheetID = "1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E";
+    function renderMessage(m) {
+        const chatBox = document.getElementById('chatBox');
+        if (!chatBox) return;
+        
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message`;
+        msgDiv.innerHTML = `
+            <div class="chat-user">${m.username || 'Cyclist'}</div>
+            <div class="chat-text">${m.text}</div>
+        `;
+        
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-    // 📰 1. News Tab မှ သတင်းများ ဆွဲယူခြင်း
-    const newsSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=News&tqx=out:json`;
+    // 5. Google Sheets Data Fetching
+    const sheetID = "1JUq3E0fGbYRNRfFgEk7lGxKzquiyRqkeRDUwDWp4a2E";
 
     function fetchNewsFromSheet() {
+        const newsSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=News&tqx=out:json`;
         fetch(newsSheetURL)
             .then(res => res.text())
             .then(data => {
@@ -313,10 +256,8 @@
             });
     }
 
-    // 📊 2. Shops Tab မှ ဆိုင်စာရင်းများ ဆွဲယူခြင်း
-    const shopSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=Shops&tqx=out:json`;
-
     function fetchShopsFromSheet() {
+        const shopSheetURL = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?sheet=Shops&tqx=out:json`;
         fetch(shopSheetURL)
             .then(res => res.text())
             .then(data => {
@@ -354,8 +295,12 @@
             });
     }
 
-    fetchNewsFromSheet();
-    fetchShopsFromSheet();
+    // DOM Ready ဖြစ်ချိန်တွင် စတင် run မည့် လုပ်ဆောင်ချက်များ
+    document.addEventListener('DOMContentLoaded', () => {
+        loadChatMessages();
+        fetchNewsFromSheet();
+        fetchShopsFromSheet();
+    });
 </script>
 </body>
 </html>
